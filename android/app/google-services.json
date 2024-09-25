@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "913393844116",
+    "project_id": "habit-tracking-db640",
+    "storage_bucket": "habit-tracking-db640.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:913393844116:android:ab5f4176eb72dec6f8d981",
+        "android_client_info": {
+          "package_name": "com.example.habit_tracking"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCalMC20uoOTrkfouI631iyK9QXEQDFrnE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
