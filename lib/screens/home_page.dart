@@ -3,6 +3,7 @@ import 'package:habit_tracking/models/habit.dart';
 import 'package:habit_tracking/services/habite_service.dart';
 import 'package:habit_tracking/widgets/add_habit_sheet.dart';
 import 'package:intl/intl.dart';
+import 'package:firebase_auth/firebase_auth.dart'; // For user information
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -13,63 +14,79 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   late HabitService habitService;
+  User? user; // Firebase user to get the user's name
+  DateTime selectedDate =
+      DateTime.now(); // The initially selected date is today
+  List<DateTime> weekDays = []; // List to store the next 7 days
+  int totalTasksToday = 0;
+  int completedTasksToday = 0;
 
   @override
   void initState() {
     super.initState();
     habitService = HabitService();
+    user = FirebaseAuth.instance.currentUser; // Get current user info
+    _generateWeekDays(); // Generate 7 days starting from today
+    _calculateTasksForSelectedDate(selectedDate); // Calculate today's tasks initially
   }
 
-  // Helper function to get the image based on category
+  void _generateWeekDays() {
+    weekDays = List<DateTime>.generate(
+        7, (index) => DateTime.now().add(Duration(days: index)));
+  }
+
+  // Fetch habits for the selected date and calculate the total/completed tasks
+  void _calculateTasksForSelectedDate(DateTime date) async {
+    // Fetch all habits for the selected date
+    List<Habit> habits = await habitService.fetchHabitsByDate(date);
+    print('Fetched habits: $habits');
+    setState(() {
+      totalTasksToday = habits.length; // Total number of habits for today
+      completedTasksToday = habits.where((habit) => habit.status == 'completed').length;
+    });
+  }
+
+  // Helper function to get the image based on category (same as before)
   Widget getCategoryImage(String category) {
     switch (category.toLowerCase()) {
       case 'sports':
-        return Image.asset('assets/sports.png',
-            width: 40); // Add your sport image here
+        return Image.asset('assets/sports.png', width: 40);
       case 'study':
-        return Image.asset('assets/study.png',
-            width: 40); // Add your study image here
+        return Image.asset('assets/study.png', width: 40);
       case 'work':
-        return Image.asset('assets/work.png',
-            width: 40); // Add your entertainment image here
+        return Image.asset('assets/work.png', width: 40);
       default:
-        return Image.asset('assets/default_icon.png',
-            width: 40); // Default image
+        return Image.asset('assets/default_icon.png', width: 40);
     }
   }
 
-  // Helper function to get the card color based on status
+  // Helper function to get the card color based on status (same as before)
   Color getCardColor(String status) {
     return status.toLowerCase() == 'complete'
         ? Colors.blue.shade100
         : Colors.white;
   }
 
-  // Helper function to get the status text
+  // Helper function to get the status text (same as before)
   Widget getStatusText(Habit habit) {
     return habit.status.toLowerCase() == 'complete'
-        ? const Text(
-            'Complete',
-            style: TextStyle(color: Colors.blue),
-          )
+        ? const Text('Complete', style: TextStyle(color: Colors.blue))
         : GestureDetector(
             onTap: () {
-              // Navigate to a new page when "Start" is clicked
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(
-              //     builder: (context) => HabitDetailsPage(habit: habit), // Add your page here
-              //   ),
-              // );
+              // Start or complete the habit
             },
             child: const Text(
               'Start',
-              style: TextStyle(
-                color: Colors.blue,
-                fontWeight: FontWeight.bold,
-              ),
+              style: TextStyle(color: Colors.blue, fontWeight: FontWeight.bold),
             ),
           );
+  }
+
+  // Helper function to compare only the date (ignoring time)
+  bool isSameDate(DateTime date1, DateTime date2) {
+    return date1.year == date2.year &&
+           date1.month == date2.month &&
+           date1.day == date2.day;
   }
 
   @override
@@ -84,71 +101,159 @@ class _HomePageState extends State<HomePage> {
           );
         },
         backgroundColor: Colors.deepPurple.shade700,
-        child: const Icon(
-          Icons.add,
-          color: Colors.white,
-        ),
+        child: const Icon(Icons.add, color: Colors.white),
       ),
       body: Padding(
         padding: const EdgeInsets.all(20),
-        child: StreamBuilder<List<Habit>>(
-          stream: habitService.getUserHabits(),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(child: CircularProgressIndicator());
-            } else if (snapshot.hasError) {
-              return Center(child: Text('Error: ${snapshot.error}'));
-            } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-              return const Center(child: Text('No habits added yet.'));
-            } else {
-              List<Habit> habits = snapshot.data!;
-              return ListView.builder(
-                itemCount: habits.length,
-                itemBuilder: (context, index) {
-                  Habit habit = habits[index];
-                  return Card(
-                    color: getCardColor(habit.status),
-                    elevation: 3,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
+        child: Column(
+          children: [
+            // Welcome message with user's name
+            Card(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12)),
+              elevation: 4,
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Welcome, ${user?.displayName ?? 'User'}',
+                      style: const TextStyle(
+                          fontSize: 18, fontWeight: FontWeight.bold),
                     ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Row(
-                        children: [
-                          // Display the image based on category
-                          getCategoryImage(habit.category),
-                          const SizedBox(width: 12),
-                          // Display the habit name, time taken, and status
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  '${habit.timeTaken} minutes ${habit.habitName}',
-                                  style: const TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 16,
-                                  ),
-                                ),
-                                const SizedBox(height: 5),
-                                getStatusText(habit),
-                              ],
-                            ),
-                          ),
-                          // Display the date
-                          Text(
-                            DateFormat.yMMMd().format(habit.date),
-                            style: const TextStyle(color: Colors.grey),
-                          ),
-                        ],
+                  ],
+                ),
+              ),
+            ),
+            const SizedBox(height: 20),
+
+            // Slider showing total and completed tasks for today
+            Card(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12)),
+              elevation: 4,
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  children: [
+                    Text(
+                        'Tasks for today: $completedTasksToday / $totalTasksToday'),
+                    Slider(
+                      value: totalTasksToday == 0
+                          ? 0
+                          : completedTasksToday / totalTasksToday,
+                      onChanged: null, // This is a non-interactive slider
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            const SizedBox(height: 20),
+
+            // Days of the week to select
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: weekDays.map((day) {
+                  bool isSelected = isSameDate(day, selectedDate);
+                  return GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        selectedDate = day;
+                        _calculateTasksForSelectedDate(day); // Calculate tasks for the selected date
+                      });
+                    },
+                    child: Container(
+                      margin: const EdgeInsets.symmetric(horizontal: 8),
+                      padding: const EdgeInsets.all(12),
+                      decoration: BoxDecoration(
+                        color: isSelected ? Colors.deepPurple : Colors.white,
+                        borderRadius: BorderRadius.circular(8),
+                        border: Border.all(color: Colors.deepPurple),
+                      ),
+                      child: Text(
+                        DateFormat('EEE, MMM d').format(day),
+                        style: TextStyle(
+                          color: isSelected ? Colors.white : Colors.deepPurple,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                   );
+                }).toList(),
+              ),
+            ),
+            const SizedBox(height: 20),
+
+            // List of habits for the selected day
+            Expanded(
+              child: StreamBuilder<List<Habit>>(
+                stream: habitService.getUserHabits(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(child: CircularProgressIndicator());
+                  } else if (snapshot.hasError) {
+                    return Center(child: Text('Error: ${snapshot.error}'));
+                  } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                    return const Center(child: Text('No habits added yet.'));
+                  } else {
+                    // Filter habits by selected date
+                    List<Habit> habits = snapshot.data!.where((habit) {
+                      return DateFormat.yMMMd().format(habit.date) ==
+                          DateFormat.yMMMd().format(selectedDate);
+                    }).toList();
+
+                    
+
+                    return ListView.builder(
+                      itemCount: habits.length,
+                      itemBuilder: (context, index) {
+                        Habit habit = habits[index];
+                        return Card(
+                          color: getCardColor(habit.status),
+                          elevation: 3,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: Row(
+                              children: [
+                                // Display the image based on category
+                                getCategoryImage(habit.category),
+                                const SizedBox(width: 12),
+                                // Display the habit name, time taken, and status
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        '${habit.timeTaken} minutes ${habit.habitName}',
+                                        style: const TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 16,
+                                        ),
+                                      ),
+                                      const SizedBox(height: 5),
+                                      getStatusText(habit),
+                                    ],
+                                  ),
+                                ),
+                                // Display the date in MM/dd/yyyy format
+                                Text(DateFormat.yMd().format(habit.date)),
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                    );
+                  }
                 },
-              );
-            }
-          },
+              ),
+            ),
+          ],
         ),
       ),
     );

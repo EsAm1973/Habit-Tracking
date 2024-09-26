@@ -1,48 +1,43 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Habit {
-  String id;
-  String habitName;
-  int timeTaken;
-  DateTime date;
-  String status;
-  String category;  
+  final String id;
+  final String habitName; // Ensure this matches the field in Firestore
+  final String category; // Ensure this matches the field in Firestore
+  final int timeTaken; // Ensure this matches the field in Firestore
+  final DateTime date; // Storing the date as DateTime
+  final String status; // Ensure this matches the field in Firestore
 
   Habit({
     required this.id,
     required this.habitName,
+    required this.category,
     required this.timeTaken,
     required this.date,
     required this.status,
-    required this.category,  
   });
 
-  // Convert Habit object to Map for Firestore
   Map<String, dynamic> toMap() {
     return {
       'habitName': habitName,
+      'category': category,
       'timeTaken': timeTaken,
-      'date': date,
+      'date':
+          Timestamp.fromDate(date), // Convert DateTime to Firestore Timestamp
       'status': status,
-      'category': category,  
     };
   }
 
-  // Convert Firestore Map to Habit object
-  static Habit fromMap(String id, Map<String, dynamic> map) {
+  // Factory method to create a Habit from a Map (e.g., Firestore document data)
+  factory Habit.fromMap(String id, Map<String, dynamic> data) {
     return Habit(
       id: id,
-      habitName: map['habitName'],
-      timeTaken: map['timeTaken'],
-      date: (map['date'] as Timestamp).toDate(),
-      status: map['status'],
-      category: map['category'],  // Retrieve category from the map
+      habitName: data['habitName'] as String, // Ensure this matches Firestore
+      category: data['category'] as String, // Ensure this matches Firestore
+      timeTaken: data['timeTaken'] as int, // Ensure this matches Firestore
+      date: (data['date'] as Timestamp)
+          .toDate(), // Convert Firestore Timestamp to DateTime
+      status: data['status'] as String, // Ensure this matches Firestore
     );
-  }
-
-   // Helper function to create Habit from Firestore document
-  static Habit fromFirestore(DocumentSnapshot doc) {
-    final data = doc.data() as Map<String, dynamic>;
-    return Habit.fromMap(doc.id, data);
   }
 }

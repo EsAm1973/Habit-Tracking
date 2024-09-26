@@ -52,25 +52,34 @@ class HabitService {
 
   // Fetch habits by selected date
   Future<List<Habit>> fetchHabitsByDate(DateTime selectedDate) async {
-    // Convert selectedDate to the required format
-    final formattedDate = Timestamp.fromDate(selectedDate);
-
-    // Get current logged-in user ID
     final userId = _auth.currentUser?.uid;
-
     if (userId == null) {
       throw Exception('No user logged in');
     }
 
-    // Fetch habits for the logged-in user filtered by date
-    final snapshot = await _firestore
-        .collection('users')
-        .doc(userId)
-        .collection('habits')
-        .where('habitDate', isEqualTo: formattedDate)
-        .get();
+    // Adjusting the query to filter by date correctly
+    final startOfDay =
+        DateTime(selectedDate.year, selectedDate.month, selectedDate.day);
+    final endOfDay = startOfDay.add(const Duration(days: 1));
 
-    // Map the Firebase docs to Habit objects
-    return snapshot.docs.map((doc) => Habit.fromFirestore(doc)).toList();
+    print('Fetching habits for date range: $startOfDay to $endOfDay');
+
+    try {
+      final snapshot = await _firestore
+          .collection('users')
+          .doc(userId)
+          .collection('habits')
+          .where('date', isGreaterThanOrEqualTo: startOfDay)
+          .where('date', isLessThan: endOfDay)
+          .get();
+
+      return snapshot.docs.map((doc) {
+        // Ensure you have a fromFirestore method to create Habit instances
+        return Habit.fromMap(doc.id, doc.data() as Map<String, dynamic>);
+      }).toList();
+    } catch (e) {
+      print('Error fetching habits: $e');
+      throw Exception('Failed to fetch habits: $e');
+    }
   }
 }
