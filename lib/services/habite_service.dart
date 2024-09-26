@@ -82,4 +82,17 @@ class HabitService {
       throw Exception('Failed to fetch habits: $e');
     }
   }
+
+  // Delete habit
+  Future<void> deleteHabit(String habitId) async {
+    User? user = _auth.currentUser;
+    if (user != null) {
+      await _firestore
+          .collection('users')
+          .doc(user.uid)
+          .collection('habits')
+          .doc(habitId)
+          .delete();
+    }
+  }
 }

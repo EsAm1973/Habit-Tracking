@@ -4,8 +4,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart'; // For input formatters
 
 class AddHabitSheet extends StatefulWidget {
-  const AddHabitSheet({super.key});
-
+  const AddHabitSheet({super.key, required this.onHabitAdded});
+   final Function onHabitAdded;
   @override
   _AddHabitSheetState createState() => _AddHabitSheetState();
 }
@@ -146,6 +146,7 @@ class _AddHabitSheetState extends State<AddHabitSheet> {
                             _showError('Please select a category');
                           } else {
                             await _saveHabit();
+                            widget.onHabitAdded();
                             Navigator.of(context).pop();
                           }
                         }

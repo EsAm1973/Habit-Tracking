@@ -27,7 +27,8 @@ class _HomePageState extends State<HomePage> {
     habitService = HabitService();
     user = FirebaseAuth.instance.currentUser; // Get current user info
     _generateWeekDays(); // Generate 7 days starting from today
-    _calculateTasksForSelectedDate(selectedDate); // Calculate today's tasks initially
+    _calculateTasksForSelectedDate(
+        selectedDate); // Calculate today's tasks initially
   }
 
   void _generateWeekDays() {
@@ -42,7 +43,8 @@ class _HomePageState extends State<HomePage> {
     print('Fetched habits: $habits');
     setState(() {
       totalTasksToday = habits.length; // Total number of habits for today
-      completedTasksToday = habits.where((habit) => habit.status == 'completed').length;
+      completedTasksToday =
+          habits.where((habit) => habit.status == 'completed').length;
     });
   }
 
@@ -85,8 +87,8 @@ class _HomePageState extends State<HomePage> {
   // Helper function to compare only the date (ignoring time)
   bool isSameDate(DateTime date1, DateTime date2) {
     return date1.year == date2.year &&
-           date1.month == date2.month &&
-           date1.day == date2.day;
+        date1.month == date2.month &&
+        date1.day == date2.day;
   }
 
   @override
@@ -97,7 +99,11 @@ class _HomePageState extends State<HomePage> {
         onPressed: () {
           showModalBottomSheet(
             context: context,
-            builder: (context) => const AddHabitSheet(),
+            builder: (context) => AddHabitSheet(
+              onHabitAdded: () {
+                _calculateTasksForSelectedDate(selectedDate);
+              },
+            ),
           );
         },
         backgroundColor: Colors.deepPurple.shade700,
@@ -139,11 +145,21 @@ class _HomePageState extends State<HomePage> {
                   children: [
                     Text(
                         'Tasks for today: $completedTasksToday / $totalTasksToday'),
-                    Slider(
-                      value: totalTasksToday == 0
-                          ? 0
-                          : completedTasksToday / totalTasksToday,
-                      onChanged: null, // This is a non-interactive slider
+                    TweenAnimationBuilder<double>(
+                      tween: Tween<double>(
+                          begin: 0,
+                          end: totalTasksToday == 0
+                              ? 0
+                              : completedTasksToday.toDouble()),
+                      duration: const Duration(seconds: 1),
+                      builder: (context, value, child) {
+                        return Slider(
+                          value: totalTasksToday == 0
+                              ? 0
+                              : value / totalTasksToday,
+                          onChanged: null, // This is a non-interactive slider
+                        );
+                      },
                     ),
                   ],
                 ),
@@ -161,7 +177,8 @@ class _HomePageState extends State<HomePage> {
                     onTap: () {
                       setState(() {
                         selectedDate = day;
-                        _calculateTasksForSelectedDate(day); // Calculate tasks for the selected date
+                        _calculateTasksForSelectedDate(
+                            day); // Calculate tasks for the selected date
                       });
                     },
                     child: Container(
@@ -198,52 +215,79 @@ class _HomePageState extends State<HomePage> {
                   } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
                     return const Center(child: Text('No habits added yet.'));
                   } else {
-                    // Filter habits by selected date
+                    // فلترة العادات حسب اليوم المحدد
                     List<Habit> habits = snapshot.data!.where((habit) {
                       return DateFormat.yMMMd().format(habit.date) ==
                           DateFormat.yMMMd().format(selectedDate);
                     }).toList();
 
-                    
+                    // إذا كانت القائمة فارغة بعد الفلترة، اعرض رسالة "لا توجد عادات"
+                    if (habits.isEmpty) {
+                      return const Center(
+                        child: Text(
+                          'No habits found for the selected date.',
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.deepPurple,
+                          ),
+                        ),
+                      );
+                    }
 
+                    // إذا كانت هناك عادات، اعرض القائمة
                     return ListView.builder(
                       itemCount: habits.length,
                       itemBuilder: (context, index) {
                         Habit habit = habits[index];
-                        return Card(
-                          color: getCardColor(habit.status),
-                          elevation: 3,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(16.0),
-                            child: Row(
-                              children: [
-                                // Display the image based on category
-                                getCategoryImage(habit.category),
-                                const SizedBox(width: 12),
-                                // Display the habit name, time taken, and status
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        '${habit.timeTaken} minutes ${habit.habitName}',
-                                        style: const TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 16,
+                        return Dismissible(
+                          key:
+                              Key(habit.id), // تأكد من أن لديك معرف فريد للعادة
+                          background: Container(color: Colors.red),
+                          onDismissed: (direction) {
+                            // حذف العادة من HabitService
+                            habitService.deleteHabit(habit.id).then((_) {
+                              // تحديث العادات بعد الحذف
+                              _calculateTasksForSelectedDate(selectedDate);
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                    content:
+                                        Text('${habit.habitName} deleted')),
+                              );
+                            });
+                          },
+                          child: Card(
+                            color: getCardColor(habit.status),
+                            elevation: 3,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(16.0),
+                              child: Row(
+                                children: [
+                                  getCategoryImage(habit.category),
+                                  const SizedBox(width: 12),
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          '${habit.timeTaken} minutes ${habit.habitName}',
+                                          style: const TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 16,
+                                          ),
                                         ),
-                                      ),
-                                      const SizedBox(height: 5),
-                                      getStatusText(habit),
-                                    ],
+                                        const SizedBox(height: 5),
+                                        getStatusText(habit),
+                                      ],
+                                    ),
                                   ),
-                                ),
-                                // Display the date in MM/dd/yyyy format
-                                Text(DateFormat.yMd().format(habit.date)),
-                              ],
+                                  Text(DateFormat.yMd().format(habit.date)),
+                                ],
+                              ),
                             ),
                           ),
                         );
