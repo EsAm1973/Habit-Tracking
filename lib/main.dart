@@ -23,6 +23,7 @@ class _MyAppState extends State<MyApp> {
         Provider<AuthService>(create: (_) => AuthService()),
       ],
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         title: 'Habit Tracker',
         theme: ThemeData(
           primarySwatch: Colors.blue,

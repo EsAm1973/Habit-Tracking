@@ -4,13 +4,14 @@ import 'dart:async';
 import 'package:habit_tracking/services/habite_service.dart';
 
 class HabitTrackingScreen extends StatefulWidget {
-  final String habitId; // إضافة habitId
+  final String habitId;
   final String habitName;
   final int durationMinutes;
   final Widget habitImage;
 
-  HabitTrackingScreen({
-    required this.habitId, // إضافة habitId
+  const HabitTrackingScreen({
+    super.key,
+    required this.habitId,
     required this.habitName,
     required this.durationMinutes,
     required this.habitImage,
@@ -26,7 +27,7 @@ class _HabitTrackingScreenState extends State<HabitTrackingScreen>
   Timer? _timer;
   int _remainingSeconds = 0;
   bool _isRunning = false;
-  final HabitService _habitService = HabitService(); // إضافة HabitService
+  final HabitService _habitService = HabitService();
 
   @override
   void initState() {
@@ -42,9 +43,9 @@ class _HabitTrackingScreenState extends State<HabitTrackingScreen>
     if (!_isRunning) {
       setState(() {
         _isRunning = true;
-        _animationController.forward();
+        _animationController.forward(); // يبدأ الانيميشن
       });
-      _timer = Timer.periodic(Duration(seconds: 1), (timer) {
+      _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
         setState(() {
           if (_remainingSeconds > 0) {
             _remainingSeconds--;
@@ -84,13 +85,19 @@ class _HabitTrackingScreenState extends State<HabitTrackingScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 210, 201, 228),
       appBar: AppBar(
-        title: Text(widget.habitName),
+        title: Text(
+          widget.habitName,
+          style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+        ),
+        centerTitle: true,
+        backgroundColor: const Color.fromARGB(255, 210, 201, 228),
+        foregroundColor: Colors.deepPurple,
       ),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Stack(
               alignment: Alignment.center,
@@ -98,42 +105,83 @@ class _HabitTrackingScreenState extends State<HabitTrackingScreen>
                 SizedBox(
                   width: 200,
                   height: 200,
-                  child: CircularProgressIndicator(
-                    value: _animationController.value,
-                    strokeWidth: 8,
-                    backgroundColor: Colors.grey[300],
-                    valueColor: AlwaysStoppedAnimation<Color>(Colors.green),
+                  child: AnimatedBuilder(
+                    animation: _animationController,
+                    builder: (context, child) {
+                      return CircularProgressIndicator(
+                        value: _animationController.value, // القيمة المتغيرة
+                        strokeWidth: 20,
+                        backgroundColor: Colors.grey[300],
+                        valueColor: AlwaysStoppedAnimation<Color>(
+                            Colors.deepPurple.shade600),
+                      );
+                    },
                   ),
                 ),
-                Container(
+                SizedBox(
                   width: 160,
                   height: 160,
                   child: widget.habitImage,
                 ),
               ],
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 40),
+            Text(
+              'Time Left',
+              style: TextStyle(fontSize: 20, color: Colors.deepPurple.shade600),
+            ),
             Text(
               "${(_remainingSeconds ~/ 60).toString().padLeft(2, '0')}:${(_remainingSeconds % 60).toString().padLeft(2, '0')}",
-              style: TextStyle(fontSize: 48, fontWeight: FontWeight.bold),
+              style: const TextStyle(
+                  fontSize: 48,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.deepPurple),
             ),
-            SizedBox(height: 30),
+            const SizedBox(height: 30),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                ElevatedButton(
-                  onPressed: _isRunning ? null : _startTimer,
-                  child: Text('Start'),
-                ),
-                ElevatedButton(
+                IconButton(
                   onPressed: _pauseTimer,
-                  child: Text('Pause'),
+                  icon: const Icon(
+                    Icons.pause,
+                    size: 40,
+                    color: Colors.deepPurple,
+                  ),
                 ),
-                ElevatedButton(
-                  onPressed: _completeHabit, // استدعاء _completeHabit عند النقر
-                  child: Text('Complete'),
+                Container(
+                  width: 70,
+                  height: 70,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(100),
+                    color: Colors.deepPurple,
+                  ),
+                  child: IconButton(
+                    onPressed: _completeHabit,
+                    icon: const Icon(
+                      Icons.check_circle_outline_sharp,
+                      color: Colors.white,
+                      size: 40,
+                    ),
+                  ),
+                ),
+                IconButton(
+                  onPressed: _isRunning ? null : _startTimer,
+                  icon: const Icon(
+                    Icons.play_arrow_outlined,
+                    size: 40,
+                    color: Colors.deepPurple,
+                  ),
                 ),
               ],
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Image.asset(
+              'assets/running.png',
+              width: 300,
+              height: 230,
             ),
           ],
         ),
