@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:habit_tracking/models/habit.dart';
+import 'package:habit_tracking/screens/habit_tracking_screen.dart';
 import 'package:habit_tracking/services/habite_service.dart';
 import 'package:habit_tracking/widgets/add_habit_sheet.dart';
 import 'package:intl/intl.dart';
@@ -44,7 +45,7 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       totalTasksToday = habits.length; // Total number of habits for today
       completedTasksToday =
-          habits.where((habit) => habit.status == 'completed').length;
+          habits.where((habit) => habit.status == 'complete').length;
     });
   }
 
@@ -70,12 +71,12 @@ class _HomePageState extends State<HomePage> {
   }
 
   // Helper function to get the status text (same as before)
-  Widget getStatusText(Habit habit) {
+  Widget getStatusText(Habit habit, Function() navigator) {
     return habit.status.toLowerCase() == 'complete'
         ? const Text('Complete', style: TextStyle(color: Colors.blue))
         : GestureDetector(
             onTap: () {
-              // Start or complete the habit
+              navigator();
             },
             child: const Text(
               'Start',
@@ -281,7 +282,28 @@ class _HomePageState extends State<HomePage> {
                                           ),
                                         ),
                                         const SizedBox(height: 5),
-                                        getStatusText(habit),
+                                        getStatusText(habit, () {
+                                          Navigator.of(context)
+                                              .push(MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      HabitTrackingScreen(
+                                                          habitId: habit.id,
+                                                          habitName:
+                                                              habit.habitName,
+                                                          durationMinutes:
+                                                              habit.timeTaken,
+                                                          habitImage:
+                                                              getCategoryImage(
+                                                                  habit
+                                                                      .category))))
+                                              .then((completed) {
+                                            if (completed == true) {
+                                              // إذا كانت العادة مكتملة، قم بتحديث الـ Slider
+                                              _calculateTasksForSelectedDate(
+                                                  selectedDate);
+                                            }
+                                          });
+                                        }),
                                       ],
                                     ),
                                   ),
