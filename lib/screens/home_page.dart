@@ -95,7 +95,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 155, 135, 192),
+      backgroundColor: const Color.fromARGB(255, 210, 201, 228),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           showModalBottomSheet(
@@ -117,26 +117,98 @@ class _HomePageState extends State<HomePage> {
             // Welcome message with user's name
             Card(
               shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12)),
-              elevation: 4,
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Welcome, ${user?.displayName ?? 'User'}',
-                      style: const TextStyle(
-                          fontSize: 18, fontWeight: FontWeight.bold),
-                    ),
-                  ],
+                  borderRadius: BorderRadius.circular(16)),
+              elevation: 8,
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(16),
+                  gradient: const LinearGradient(
+                    colors: [
+                      Color(0xFF8A2387),
+                      Color.fromARGB(255, 147, 95, 231),
+                      Color.fromARGB(255, 158, 33, 242)
+                    ],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            RichText(
+                              text: TextSpan(
+                                children: [
+                                  TextSpan(
+                                    text: 'Welcome back, ',
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white.withOpacity(0.8),
+                                    ),
+                                  ),
+                                  TextSpan(
+                                    text: '${user?.displayName ?? 'User'}!',
+                                    style: const TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            const SizedBox(height: 8),
+                            Text(
+                              'Complete $completedTasksToday/$totalTasksToday task today',
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: Colors.white.withOpacity(0.8),
+                              ),
+                            ),
+                            const SizedBox(height: 16),
+                            SliderTheme(
+                              data: SliderTheme.of(context).copyWith(
+                                trackHeight: 8,
+                                activeTrackColor: Colors.pinkAccent,
+                                inactiveTrackColor: Colors.purple.shade100,
+                                thumbShape: const RoundSliderThumbShape(
+                                    enabledThumbRadius: 8),
+                                overlayShape: const RoundSliderOverlayShape(
+                                    overlayRadius: 14),
+                                thumbColor: Colors.white,
+                                overlayColor: Colors.pink.withOpacity(0.2),
+                              ),
+                              child: Slider(
+                                value: totalTasksToday == 0
+                                    ? 0
+                                    : completedTasksToday.toDouble() /
+                                        totalTasksToday,
+                                onChanged: null, // Non-interactive slider
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Image.asset(
+                        'assets/calender.png',
+                        height: 100,
+                        width: 100,
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
-            const SizedBox(height: 20),
 
             // Slider showing total and completed tasks for today
-            Card(
+            /* Card(
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12)),
               elevation: 4,
@@ -166,6 +238,7 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
             ),
+            */
             const SizedBox(height: 20),
 
             // Days of the week to select
