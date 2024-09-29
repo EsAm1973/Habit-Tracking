@@ -185,62 +185,32 @@ class _HomePageState extends State<HomePage> {
                                 thumbColor: Colors.white,
                                 overlayColor: Colors.pink.withOpacity(0.2),
                               ),
-                              child: Slider(
-                                value: totalTasksToday == 0
-                                    ? 0
-                                    : completedTasksToday.toDouble() /
-                                        totalTasksToday,
-                                onChanged: null, // Non-interactive slider
+                              child: TweenAnimationBuilder<double>(
+                                tween: Tween<double>(
+                                  begin: 0,
+                                  end: totalTasksToday == 0
+                                      ? 0
+                                      : completedTasksToday.toDouble() /
+                                          totalTasksToday,
+                                ),
+                                duration: const Duration(milliseconds: 500),
+                                builder: (context, value, child) {
+                                  return Slider(
+                                    value: value,
+                                    onChanged: null, // Non-interactive slider
+                                  );
+                                },
                               ),
-                            ),
+                            )
                           ],
                         ),
-                      ),
-                      Image.asset(
-                        'assets/calender.png',
-                        height: 100,
-                        width: 100,
                       ),
                     ],
                   ),
                 ),
               ),
             ),
-
-            // Slider showing total and completed tasks for today
-            /* Card(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12)),
-              elevation: 4,
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  children: [
-                    Text(
-                        'Tasks for today: $completedTasksToday / $totalTasksToday'),
-                    TweenAnimationBuilder<double>(
-                      tween: Tween<double>(
-                          begin: 0,
-                          end: totalTasksToday == 0
-                              ? 0
-                              : completedTasksToday.toDouble()),
-                      duration: const Duration(seconds: 1),
-                      builder: (context, value, child) {
-                        return Slider(
-                          value: totalTasksToday == 0
-                              ? 0
-                              : value / totalTasksToday,
-                          onChanged: null, // This is a non-interactive slider
-                        );
-                      },
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            */
             const SizedBox(height: 20),
-
             // Days of the week to select
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
