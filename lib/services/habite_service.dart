@@ -95,4 +95,71 @@ class HabitService {
           .delete();
     }
   }
+
+  // جلب العادات بناءً على الأسبوع الحالي أو السابق
+  Future<List<Habit>> getHabitsByWeek(String week) async {
+    QuerySnapshot snapshot;
+    DateTime start, end;
+
+    if (week == 'This week') {
+      start = _getStartOfWeek();
+      end = _getEndOfWeek();
+    } else {
+      start = _getStartOfPreviousWeek();
+      end = _getEndOfPreviousWeek();
+    }
+
+    // Adjusting for timezone when querying
+    print('Fetching habits for date range: $start to $end');
+
+    try {
+      snapshot = await _firestore
+          .collection('users') // Ensure you use the correct path
+          .doc(_auth.currentUser!.uid)
+          .collection('habits')
+          .where('date',
+              isGreaterThanOrEqualTo:
+                  Timestamp.fromDate(start.toUtc().add(Duration(hours: 3))))
+          .where('date',
+              isLessThanOrEqualTo:
+                  Timestamp.fromDate(end.toUtc().add(Duration(hours: 3))))
+          .get();
+
+      print('Fetched documents: ${snapshot.docs.length}');
+      for (var doc in snapshot.docs) {
+        print('Habit data: ${doc.data()}');
+      }
+
+      return snapshot.docs.map((doc) {
+        return Habit.fromMap(doc.id, doc.data() as Map<String, dynamic>);
+      }).toList();
+    } catch (e) {
+      print('Error fetching habits: $e');
+      throw Exception('Failed to fetch habits: $e');
+    }
+  }
+
+  DateTime _getStartOfWeek() {
+    DateTime now = DateTime.now();
+    // Start of the current week (e.g., Monday)
+    return now.subtract(Duration(days: now.weekday - 1));
+  }
+
+  DateTime _getEndOfWeek() {
+    DateTime now = DateTime.now();
+    // End of the current week (e.g., Sunday)
+    return now.add(Duration(days: 7 - now.weekday));
+  }
+
+  DateTime _getStartOfPreviousWeek() {
+    DateTime now = DateTime.now();
+    // Start of the previous week (Monday)
+    return now.subtract(Duration(days: now.weekday + 6));
+  }
+
+  DateTime _getEndOfPreviousWeek() {
+    DateTime now = DateTime.now();
+    // End of the previous week (Sunday)
+    return now.subtract(Duration(days: now.weekday));
+  }
 }
