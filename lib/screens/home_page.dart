@@ -58,6 +58,16 @@ class _HomePageState extends State<HomePage> {
         return Image.asset('assets/study.png', width: 40);
       case 'work':
         return Image.asset('assets/work.png', width: 40);
+      case 'food':
+        return Image.asset('assets/food.png', width: 40);
+      case 'sleep':
+        return Image.asset('assets/sleep.png', width: 40);
+      case 'worship':
+        return Image.asset('assets/worship.png', width: 40);
+      case 'drink':
+        return Image.asset('assets/drink.png', width: 40);
+      case 'entertainment':
+        return Image.asset('assets/entertainment.png', width: 40);
       default:
         return Image.asset('assets/default_icon.png', width: 40);
     }
@@ -204,6 +214,11 @@ class _HomePageState extends State<HomePage> {
                             )
                           ],
                         ),
+                      ),
+                      Image.asset(
+                        'assets/calender.png',
+                        width: 130,
+                        height: 130,
                       ),
                     ],
                   ),
