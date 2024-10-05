@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:habit_tracking/screens/home_page.dart';
 import 'package:habit_tracking/screens/profile_screen.dart';
 import 'package:habit_tracking/screens/tracking_screen.dart';
@@ -14,64 +13,52 @@ class ButtonNavBar extends StatefulWidget {
 class _ButtonNavBarState extends State<ButtonNavBar> {
   int _selectedIndex = 0;
 
+  final List<Widget> screens = [
+    const HomePage(),
+    const TrackingScreen(),
+    const ProfileScreen(),
+  ];
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    final List<Widget> screens = [
-      HomePage(),
-      TrackingScreen(),
-      ProfileScreen(),
-    ];
     return SafeArea(
       child: Scaffold(
         body: screens[_selectedIndex],
-        bottomNavigationBar: Container(
-          decoration: BoxDecoration(
-            color: const Color.fromARGB(255, 208, 218, 228), // Dark color for background
-            boxShadow: [
-              BoxShadow(blurRadius: 20, color: Colors.grey.withOpacity(.1)),
-            ],
+        bottomNavigationBar: ClipRRect(
+          borderRadius: const BorderRadius.only(
+            topLeft: Radius.circular(20), // انحناء من الأعلى يسار
+            topRight: Radius.circular(20), // انحناء من الأعلى يمين
           ),
-          child: SafeArea(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
-              child: GNav(
-                gap: 8, // Space between icon and text
-                activeColor: const Color.fromARGB(255, 119, 52, 196), // Active icon and text color (light tan)
-                color:
-                    const Color(0xFF9E9E9E), // Inactive icon color (light grey)
-                iconSize: 24,
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                duration: const Duration(milliseconds: 500),
-                tabBackgroundColor:
-                    Colors.transparent, // No background color for active tab
-                tabs: const [
-                  GButton(
-                    icon: Icons.home,
-                    text: 'Home',
-                  ),
-                  GButton(
-                    icon: Icons.favorite_border,
-                    text: 'Favorite',
-                  ),
-                  GButton(
-                    icon: Icons.person_outline,
-                    text: 'Profile',
-                  ),
-                ],
-                selectedIndex: _selectedIndex,
-                onTabChange: (index) {
-                  setState(() {
-                    _selectedIndex = index;
-                  });
-                },
+          child: BottomNavigationBar(
+            currentIndex: _selectedIndex,
+            onTap: _onItemTapped,
+            backgroundColor: Colors.white, // لون الخلفية
+            selectedItemColor:
+                const Color.fromARGB(255, 119, 52, 196), // لون العنصر المحدد
+            unselectedItemColor: const Color(0xFF9E9E9E), // لون العنصر غير المحدد
+            items: const [
+              BottomNavigationBarItem(
+                icon: Icon(Icons.home),
+                label: 'Home',
               ),
-            ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.bar_chart),
+                label: 'Tracking',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.person_outline),
+                label: 'Profile',
+              ),
+            ],
           ),
         ),
       ),
     );
   }
 }
-
-class ProfilePage {}

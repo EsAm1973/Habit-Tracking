@@ -85,17 +85,26 @@ class _HabitTrackingScreenState extends State<HabitTrackingScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 210, 201, 228),
       appBar: AppBar(
         title: Text(
           widget.habitName,
           style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
-        backgroundColor: const Color.fromARGB(255, 210, 201, 228),
+        backgroundColor: const Color(0xFFB3E5FC),
         foregroundColor: Colors.deepPurple,
       ),
-      body: Padding(
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              Color(0xFFB3E5FC), // Light gradient start
+              Color(0xFFE1BEE7) // Gradient end
+            ],
+          ),
+        ),
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
         child: Column(
           children: [
@@ -111,7 +120,8 @@ class _HabitTrackingScreenState extends State<HabitTrackingScreen>
                       return CircularProgressIndicator(
                         value: _animationController.value, // القيمة المتغيرة
                         strokeWidth: 20,
-                        backgroundColor: Colors.grey[300],
+                        backgroundColor:
+                            const Color.fromARGB(255, 252, 252, 252),
                         valueColor: AlwaysStoppedAnimation<Color>(
                             Colors.deepPurple.shade600),
                       );

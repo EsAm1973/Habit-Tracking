@@ -74,16 +74,31 @@ class _HomePageState extends State<HomePage> {
   }
 
   // Helper function to get the card color based on status (same as before)
-  Color getCardColor(String status) {
-    return status.toLowerCase() == 'complete'
-        ? Colors.blue.shade100
-        : Colors.white;
+  BoxDecoration getCardDecoration(String status) {
+    return BoxDecoration(
+      gradient: status.toLowerCase() == 'complete'
+          ? const LinearGradient(
+              colors: [
+                Color.fromARGB(255, 205, 179, 228),
+                Color(0xFF9A4EBC),
+              ], // استخدام الألوان المطلوبة
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            )
+          : const LinearGradient(colors: [
+              Colors.white,
+              Colors.white,
+            ]), // أو استخدام تدرج آخر أو لون آخر هنا
+      borderRadius: BorderRadius.circular(12),
+    );
   }
 
   // Helper function to get the status text (same as before)
   Widget getStatusText(Habit habit, Function() navigator) {
     return habit.status.toLowerCase() == 'complete'
-        ? const Text('Complete', style: TextStyle(color: Colors.blue))
+        ? const Text('Complete',
+            style: TextStyle(
+                color: Colors.deepPurple, fontWeight: FontWeight.bold))
         : GestureDetector(
             onTap: () {
               navigator();
@@ -105,7 +120,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 210, 201, 228),
+      backgroundColor: const Color.fromARGB(255, 225, 219, 236),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           showModalBottomSheet(
@@ -118,9 +133,19 @@ class _HomePageState extends State<HomePage> {
           );
         },
         backgroundColor: Colors.deepPurple.shade700,
-        child: const Icon(Icons.add, color: Colors.white),
+        child: const Icon(Icons.add, color: Colors.white, size: 30),
       ),
-      body: Padding(
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              Color(0xFFB3E5FC), // Light gradient start
+              Color(0xFFE1BEE7) // Gradient end
+            ],
+          ),
+        ),
         padding: const EdgeInsets.all(20),
         child: Column(
           children: [
@@ -315,12 +340,9 @@ class _HomePageState extends State<HomePage> {
                               );
                             });
                           },
-                          child: Card(
-                            color: getCardColor(habit.status),
-                            elevation: 3,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12),
-                            ),
+                          child: Container(
+                            margin: const EdgeInsets.symmetric(vertical: 6),
+                            decoration: getCardDecoration(habit.status),
                             child: Padding(
                               padding: const EdgeInsets.all(16.0),
                               child: Row(
@@ -334,10 +356,12 @@ class _HomePageState extends State<HomePage> {
                                       children: [
                                         Text(
                                           '${habit.timeTaken} minutes ${habit.habitName}',
-                                          style: const TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 16,
-                                          ),
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 16,
+                                              color: habit.status == 'complete'
+                                                  ? Colors.white
+                                                  : Colors.purple),
                                         ),
                                         const SizedBox(height: 5),
                                         getStatusText(habit, () {
@@ -365,7 +389,6 @@ class _HomePageState extends State<HomePage> {
                                       ],
                                     ),
                                   ),
-                                  Text(DateFormat.yMd().format(habit.date)),
                                 ],
                               ),
                             ),
