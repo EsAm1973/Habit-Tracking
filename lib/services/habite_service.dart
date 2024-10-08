@@ -141,25 +141,34 @@ class HabitService {
 
   DateTime _getStartOfWeek() {
     DateTime now = DateTime.now();
-    // Start of the current week (e.g., Monday)
-    return now.subtract(Duration(days: now.weekday - 1));
+    // نبدأ من يوم السبت (أول ساعة في اليوم)
+    DateTime startOfWeek = now.subtract(Duration(days: (now.weekday % 7) + 1));
+    return DateTime(
+        startOfWeek.year, startOfWeek.month, startOfWeek.day, 0, 0, 0);
   }
 
   DateTime _getEndOfWeek() {
     DateTime now = DateTime.now();
-    // End of the current week (e.g., Sunday)
-    return now.add(Duration(days: 7 - now.weekday));
+    // نهاية الأسبوع تكون يوم الجمعة (آخر ثانية من اليوم)
+    DateTime endOfWeek = now.add(Duration(days: 6 - (now.weekday % 7)));
+    return DateTime(endOfWeek.year, endOfWeek.month, endOfWeek.day, 23, 59, 59);
   }
 
   DateTime _getStartOfPreviousWeek() {
     DateTime now = DateTime.now();
-    // Start of the previous week (Monday)
-    return now.subtract(Duration(days: now.weekday + 6));
+    // حساب بداية الأسبوع السابق (أول ساعة من يوم السبت السابق)
+    DateTime startOfPreviousWeek =
+        now.subtract(Duration(days: (now.weekday % 7) + 8));
+    return DateTime(startOfPreviousWeek.year, startOfPreviousWeek.month,
+        startOfPreviousWeek.day, 0, 0, 0);
   }
 
   DateTime _getEndOfPreviousWeek() {
     DateTime now = DateTime.now();
-    // End of the previous week (Sunday)
-    return now.subtract(Duration(days: now.weekday));
+    // حساب نهاية الأسبوع السابق (آخر ثانية من يوم الجمعة السابق)
+    DateTime endOfPreviousWeek =
+        now.subtract(Duration(days: (now.weekday % 7) + 2));
+    return DateTime(endOfPreviousWeek.year, endOfPreviousWeek.month,
+        endOfPreviousWeek.day, 23, 59, 59);
   }
 }

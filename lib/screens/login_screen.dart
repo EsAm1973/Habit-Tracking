@@ -29,7 +29,7 @@ class _LoginScreenState extends State<LoginScreen> {
         if (user != null) {
           Navigator.pushReplacement(
             context,
-            MaterialPageRoute(builder: (context) => ButtonNavBar()),
+            MaterialPageRoute(builder: (context) => const ButtonNavBar()),
           );
         }
       } catch (e) {

@@ -43,13 +43,15 @@ class _TrackingScreenState extends State<TrackingScreen> {
     DateTime endOfWeek;
 
     if (selectedWeek == 'Previous week') {
-      // حساب بداية ونهاية الأسبوع السابق
-      startOfWeek = today.subtract(Duration(days: today.weekday + 7));
-      endOfWeek = startOfWeek.add(const Duration(days: 6));
+      // حساب بداية ونهاية الأسبوع السابق بحيث يبدأ من السبت وينتهي الجمعة
+      startOfWeek =
+          today.subtract(Duration(days: today.weekday + 8)); // يوم السبت السابق
+      endOfWeek = startOfWeek.add(const Duration(days: 6)); // يوم الجمعة
     } else {
-      // حساب بداية ونهاية هذا الأسبوع
-      startOfWeek = today.subtract(Duration(days: today.weekday % 7));
-      endOfWeek = startOfWeek.add(const Duration(days: 6));
+      // حساب بداية ونهاية هذا الأسبوع بحيث يبدأ من السبت وينتهي الجمعة
+      startOfWeek = today
+          .subtract(Duration(days: today.weekday % 7 + 1)); // يوم السبت الحالي
+      endOfWeek = startOfWeek.add(const Duration(days: 6)); // يوم الجمعة
     }
 
     // تصفير العداد لكل يوم
@@ -61,7 +63,8 @@ class _TrackingScreenState extends State<TrackingScreen> {
     for (var habit in habits) {
       // التأكد من أن العادة تخص الأسبوع المحدد
       if (habit.date.isAfter(startOfWeek) && habit.date.isBefore(endOfWeek)) {
-        int habitWeekday = habit.date.weekday % 7;
+        int habitWeekday = (habit.date.weekday + 1) %
+            7; // تعديل لحساب الأيام من السبت إلى الجمعة
 
         totalHabitsPerDay[habitWeekday] =
             (totalHabitsPerDay[habitWeekday] ?? 0) + 1;
@@ -179,15 +182,15 @@ class _TrackingScreenState extends State<TrackingScreen> {
                                 const style = TextStyle(
                                     color: Colors.black, fontSize: 12);
 
-                                // قائمة بأسماء الأيام
+                                // قائمة بأسماء الأيام من السبت إلى الجمعة
                                 const List<String> daysOfWeek = [
-                                  'Sun',
-                                  'Mon',
-                                  'Tue',
-                                  'Wed',
-                                  'Thu',
-                                  'Fri',
-                                  'Sat'
+                                  'Sat', // السبت
+                                  'Sun', // الأحد
+                                  'Mon', // الإثنين
+                                  'Tue', // الثلاثاء
+                                  'Wed', // الأربعاء
+                                  'Thu', // الخميس
+                                  'Fri', // الجمعة
                                 ];
 
                                 // استرجاع اسم اليوم بناءً على قيمة الـ index
@@ -202,6 +205,7 @@ class _TrackingScreenState extends State<TrackingScreen> {
                             ),
                           ),
                         ),
+
                         barGroups: _buildBarGroups(),
                         barTouchData:
                             BarTouchData(enabled: false), // Disable tooltips
