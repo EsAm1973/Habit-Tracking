@@ -90,6 +90,15 @@ class _TrackingScreenState extends State<TrackingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: const Color(0xFFB3E5FC),
+        centerTitle: true,
+        title: const Text('Tracking',
+            style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+                color: Colors.purple)),
+      ),
       body: Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(
@@ -108,44 +117,35 @@ class _TrackingScreenState extends State<TrackingScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    IconButton(
-                      icon: const Icon(Icons.arrow_back, color: Colors.black),
-                      onPressed: () => Navigator.pop(context),
-                    ),
-                    const Text('Tracking',
-                        style: TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black)),
-                    const SizedBox(width: 40), // Placeholder for symmetry
-                  ],
-                ),
-                const SizedBox(height: 20),
-
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Text(
-                      'This week',
-                      style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                    ),
-                    DropdownButton<String>(
-                      value: selectedWeek,
-                      items: ['This week', 'Previous week'].map((String week) {
-                        return DropdownMenuItem<String>(
-                          value: week,
-                          child: Text(week),
-                        );
-                      }).toList(),
-                      onChanged: (String? newWeek) {
-                        setState(() {
-                          selectedWeek = newWeek!;
-                          _fetchHabits();
-                        });
-                      },
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 10, vertical: 5),
+                      decoration: BoxDecoration(
+                          color: const Color.fromARGB(255, 185, 197, 248),
+                          borderRadius: BorderRadius.circular(20)),
+                      child: DropdownButton<String>(
+                        icon: const Icon(Icons.keyboard_arrow_down_sharp),
+                        style: const TextStyle(
+                            color: Colors.purple,
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold),
+                        value: selectedWeek,
+                        items:
+                            ['This week', 'Previous week'].map((String week) {
+                          return DropdownMenuItem<String>(
+                            value: week,
+                            child: Text(week),
+                          );
+                        }).toList(),
+                        onChanged: (String? newWeek) {
+                          setState(() {
+                            selectedWeek = newWeek!;
+                            _fetchHabits();
+                          });
+                        },
+                      ),
                     ),
                   ],
                 ),
@@ -154,7 +154,8 @@ class _TrackingScreenState extends State<TrackingScreen> {
                 // Bar Chart Section inside a Container with Violet Shades
                 Container(
                   decoration: BoxDecoration(
-                    color: Colors.deepPurple[100], // Violet shade
+                    color: const Color.fromARGB(
+                        255, 160, 143, 245), // Violet shade
                     borderRadius: BorderRadius.circular(16),
                   ),
                   padding: const EdgeInsets.all(16),
@@ -166,6 +167,8 @@ class _TrackingScreenState extends State<TrackingScreen> {
                         gridData:
                             const FlGridData(show: false), // Hide grid lines
                         titlesData: FlTitlesData(
+                          rightTitles: const AxisTitles(
+                              sideTitles: SideTitles(showTitles: false)),
                           show: true,
                           leftTitles: const AxisTitles(
                             sideTitles: SideTitles(
@@ -180,7 +183,9 @@ class _TrackingScreenState extends State<TrackingScreen> {
                               showTitles: true,
                               getTitlesWidget: (double value, TitleMeta meta) {
                                 const style = TextStyle(
-                                    color: Colors.black, fontSize: 12);
+                                    color: Colors.white,
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.bold);
 
                                 // قائمة بأسماء الأيام من السبت إلى الجمعة
                                 const List<String> daysOfWeek = [
@@ -217,7 +222,10 @@ class _TrackingScreenState extends State<TrackingScreen> {
 
                 const Text(
                   'Progress of this week',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                      color: Colors.purple,
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 10),
 
@@ -237,16 +245,17 @@ class _TrackingScreenState extends State<TrackingScreen> {
                                 leading: getCategoryImage(habit.category),
                                 title: Text(habit.habitName,
                                     style: const TextStyle(
+                                        color: Colors.purple,
                                         fontWeight: FontWeight.bold)),
                                 subtitle: Text(
                                     'Time Taken: ${habit.timeTaken} minutes',
                                     style:
-                                        const TextStyle(color: Colors.purple)),
+                                        const TextStyle(color: Colors.black)),
                                 trailing: Text(
                                   habit.status,
                                   style: TextStyle(
                                       color: habit.status == 'complete'
-                                          ? Colors.green
+                                          ? Colors.purple
                                           : Colors.red,
                                       fontWeight: FontWeight.bold),
                                 ),
@@ -279,7 +288,11 @@ class _TrackingScreenState extends State<TrackingScreen> {
                   borderRadius: BorderRadius.circular(8),
                   rodStackItems: [],
                   gradient: const LinearGradient(
-                    colors: [Colors.pink, Colors.purple],
+                    colors: [
+                      Color.fromARGB(255, 223, 52, 241),
+                      Color.fromARGB(255, 228, 106, 226),
+                      Color.fromARGB(255, 240, 139, 208),
+                    ],
                     begin: Alignment.bottomCenter,
                     end: Alignment.topCenter,
                   ),
