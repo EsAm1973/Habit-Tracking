@@ -17,7 +17,7 @@ class _TrackingScreenState extends State<TrackingScreen> {
   Map<int, double> completionRates =
       {}; // Map to store completion percentages for each day
   Map<int, int> habitsPerDay = {}; // Map to store total habits per day
-
+  bool loading = false;
   @override
   void initState() {
     super.initState();
@@ -25,12 +25,16 @@ class _TrackingScreenState extends State<TrackingScreen> {
   }
 
   Future<void> _fetchHabits() async {
+    setState(() {
+      loading = true;
+    });
     List<Habit> fetchedHabits =
         await habitService.getHabitsByWeek(selectedWeek);
     print('Fetched ${fetchedHabits.length} habits');
     setState(() {
       habits = fetchedHabits;
       _calculateCompletionRates(); // إعادة حساب النسب المئوية بعد جلب البيانات
+      loading = false;
     });
   }
 
@@ -150,70 +154,75 @@ class _TrackingScreenState extends State<TrackingScreen> {
                   ],
                 ),
                 const SizedBox(height: 20),
-
                 // Bar Chart Section inside a Container with Violet Shades
                 Container(
                   decoration: BoxDecoration(
                     color: const Color.fromARGB(
-                        255, 160, 143, 245), // Violet shade
+                        255, 183, 170, 247), // Violet shade
                     borderRadius: BorderRadius.circular(16),
                   ),
                   padding: const EdgeInsets.all(16),
                   child: AspectRatio(
                     aspectRatio: 1.5,
-                    child: BarChart(
-                      BarChartData(
-                        borderData: FlBorderData(show: false),
-                        gridData:
-                            const FlGridData(show: false), // Hide grid lines
-                        titlesData: FlTitlesData(
-                          rightTitles: const AxisTitles(
-                              sideTitles: SideTitles(showTitles: false)),
-                          show: true,
-                          leftTitles: const AxisTitles(
-                            sideTitles: SideTitles(
-                                showTitles: false), // Remove left numbers
-                          ),
-                          topTitles: const AxisTitles(
-                            sideTitles: SideTitles(
-                                showTitles: false), // Remove top numbers
-                          ),
-                          bottomTitles: AxisTitles(
-                            sideTitles: SideTitles(
-                              showTitles: true,
-                              getTitlesWidget: (double value, TitleMeta meta) {
-                                const style = TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.bold);
+                    child: AnimatedSwitcher(
+                      duration: const Duration(milliseconds: 500),
+                      child: BarChart(
+                        key: ValueKey<int>(
+                            habits.length), // Important for animation
+                        BarChartData(
+                          borderData: FlBorderData(show: false),
+                          gridData:
+                              const FlGridData(show: false), // Hide grid lines
+                          titlesData: FlTitlesData(
+                            rightTitles: const AxisTitles(
+                                sideTitles: SideTitles(showTitles: false)),
+                            show: true,
+                            leftTitles: const AxisTitles(
+                              sideTitles: SideTitles(
+                                  showTitles: false), // Remove left numbers
+                            ),
+                            topTitles: const AxisTitles(
+                              sideTitles: SideTitles(
+                                  showTitles: false), // Remove top numbers
+                            ),
+                            bottomTitles: AxisTitles(
+                              sideTitles: SideTitles(
+                                showTitles: true,
+                                getTitlesWidget:
+                                    (double value, TitleMeta meta) {
+                                  const style = TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.bold);
 
-                                // قائمة بأسماء الأيام من السبت إلى الجمعة
-                                const List<String> daysOfWeek = [
-                                  'Sat', // السبت
-                                  'Sun', // الأحد
-                                  'Mon', // الإثنين
-                                  'Tue', // الثلاثاء
-                                  'Wed', // الأربعاء
-                                  'Thu', // الخميس
-                                  'Fri', // الجمعة
-                                ];
+                                  // List of day names from Saturday to Friday
+                                  const List<String> daysOfWeek = [
+                                    'Sat',
+                                    'Sun',
+                                    'Mon',
+                                    'Tue',
+                                    'Wed',
+                                    'Thu',
+                                    'Fri'
+                                  ];
 
-                                // استرجاع اسم اليوم بناءً على قيمة الـ index
-                                String dayName = daysOfWeek[value.toInt() % 7];
+                                  // Get the day name based on the index value
+                                  String dayName =
+                                      daysOfWeek[value.toInt() % 7];
 
-                                return SideTitleWidget(
-                                  axisSide: meta.axisSide,
-                                  space: 4.0,
-                                  child: Text(dayName, style: style),
-                                );
-                              },
+                                  return SideTitleWidget(
+                                    axisSide: meta.axisSide,
+                                    space: 4.0,
+                                    child: Text(dayName, style: style),
+                                  );
+                                },
+                              ),
                             ),
                           ),
+                          barGroups: _buildBarGroups(),
+                          barTouchData:
+                              BarTouchData(enabled: false), // Disable tooltips
                         ),
-
-                        barGroups: _buildBarGroups(),
-                        barTouchData:
-                            BarTouchData(enabled: false), // Disable tooltips
                       ),
                     ),
                   ),
@@ -229,41 +238,48 @@ class _TrackingScreenState extends State<TrackingScreen> {
                 ),
                 const SizedBox(height: 10),
 
-                Expanded(
-                  child: habits.isEmpty
-                      ? const Center(
-                          child: Text('No habits found for the selected week'))
-                      : ListView.builder(
-                          itemCount: habits.length,
-                          itemBuilder: (context, index) {
-                            final habit = habits[index];
-                            return Card(
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(16.0)),
-                              margin: const EdgeInsets.symmetric(vertical: 8.0),
-                              child: ListTile(
-                                leading: getCategoryImage(habit.category),
-                                title: Text(habit.habitName,
-                                    style: const TextStyle(
-                                        color: Colors.purple,
-                                        fontWeight: FontWeight.bold)),
-                                subtitle: Text(
-                                    'Time Taken: ${habit.timeTaken} minutes',
-                                    style:
-                                        const TextStyle(color: Colors.black)),
-                                trailing: Text(
-                                  habit.status,
-                                  style: TextStyle(
-                                      color: habit.status == 'complete'
-                                          ? Colors.purple
-                                          : Colors.red,
-                                      fontWeight: FontWeight.bold),
-                                ),
+                loading
+                    ? const Center(
+                        child: CircularProgressIndicator(),
+                      )
+                    : Expanded(
+                        child: habits.isEmpty
+                            ? const Center(
+                                child: Text(
+                                    'No habits found for the selected week'))
+                            : ListView.builder(
+                                itemCount: habits.length,
+                                itemBuilder: (context, index) {
+                                  final habit = habits[index];
+                                  return Card(
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(16.0)),
+                                    margin: const EdgeInsets.symmetric(
+                                        vertical: 8.0),
+                                    child: ListTile(
+                                      leading: getCategoryImage(habit.category),
+                                      title: Text(habit.habitName,
+                                          style: const TextStyle(
+                                              color: Colors.purple,
+                                              fontWeight: FontWeight.bold)),
+                                      subtitle: Text(
+                                          'Time Taken: ${habit.timeTaken} minutes',
+                                          style: const TextStyle(
+                                              color: Colors.black)),
+                                      trailing: Text(
+                                        habit.status,
+                                        style: TextStyle(
+                                            color: habit.status == 'complete'
+                                                ? Colors.purple
+                                                : Colors.red,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ),
+                                  );
+                                },
                               ),
-                            );
-                          },
-                        ),
-                ),
+                      ),
               ],
             ),
           ),
@@ -286,7 +302,6 @@ class _TrackingScreenState extends State<TrackingScreen> {
                   toY: completionRate, // Display the ratio of completed/total
                   width: 20,
                   borderRadius: BorderRadius.circular(8),
-                  rodStackItems: [],
                   gradient: const LinearGradient(
                     colors: [
                       Color.fromARGB(255, 223, 52, 241),
@@ -296,6 +311,8 @@ class _TrackingScreenState extends State<TrackingScreen> {
                     begin: Alignment.bottomCenter,
                     end: Alignment.topCenter,
                   ),
+                  // Add the AnimatedContainer here
+                  rodStackItems: [],
                 ),
               ],
             )
