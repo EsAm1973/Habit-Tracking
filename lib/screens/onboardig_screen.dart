@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_onboarding_slider/flutter_onboarding_slider.dart';
 import 'package:habit_tracking/screens/home_page.dart';
+import 'package:habit_tracking/screens/login_screen.dart';
 import '../classes/colors.dart';
 import '../widgets/custom_container.dart';
 import '../widgets/onboarding_build_page.dart';
@@ -58,7 +59,7 @@ class OnboardingScreen extends StatelessWidget {
         onFinish: () {
           Navigator.pushReplacement(
             context,
-            MaterialPageRoute(builder: (context) => HomePage()),
+            MaterialPageRoute(builder: (context) => LoginScreen()),
           );
         },
       ),
