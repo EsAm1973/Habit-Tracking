@@ -3,10 +3,12 @@
 #
 
 list(APPEND FLUTTER_PLUGIN_LIST
+  awesome_notifications
   cloud_firestore
   firebase_auth
   firebase_core
   firebase_storage
+  rive_common
 )
 
 list(APPEND FLUTTER_FFI_PLUGIN_LIST
