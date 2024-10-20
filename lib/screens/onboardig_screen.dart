@@ -1,22 +1,25 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_onboarding_slider/flutter_onboarding_slider.dart';
-import 'package:habit_tracking/screens/home_page.dart';
-import 'package:habit_tracking/screens/login_screen.dart';
+import 'package:habit_tracking/screens/welcomScreen.dart';
 import '../classes/colors.dart';
 import '../widgets/custom_container.dart';
 import '../widgets/onboarding_build_page.dart';
 
-
 class OnboardingScreen extends StatelessWidget {
+  const OnboardingScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: OnBoardingSlider(
         headerBackgroundColor: Colors.white,
         finishButtonText: 'Get Started',
-        finishButtonStyle: FinishButtonStyle(backgroundColor: MyColors.purple,shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(32),)),
-        finishButtonTextStyle: TextStyle(
+        finishButtonStyle: FinishButtonStyle(
+            backgroundColor: MyColors.purple,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(32),
+            )),
+        finishButtonTextStyle: const TextStyle(
           fontSize: 18,
           color: Colors.white,
         ),
@@ -31,8 +34,8 @@ class OnboardingScreen extends StatelessWidget {
           color: MyColors.purple,
           Icons.arrow_forward,
         ),
-        controllerColor:MyColors.purple,
-        background: [
+        controllerColor: MyColors.purple,
+        background: const [
           CustomContainer(),
           CustomContainer(),
           CustomContainer(),
@@ -42,12 +45,14 @@ class OnboardingScreen extends StatelessWidget {
         pageBodies: [
           buildPage(
             title: "Are you ready ? ",
-            description: "We will help you to built some habits and learn skills ",
+            description:
+                "We will help you to built some habits and learn skills ",
             image: 'assets/Animation - 1728606856706.json',
           ),
           buildPage(
             title: "Track Your Progress",
-            description: "Add healthy habits and set a daily or weekly timer for practicing your habits ",
+            description:
+                "Add healthy habits and set a daily or weekly timer for practicing your habits ",
             image: 'assets/Animation - 1728253205424.json',
           ),
           buildPage(
@@ -59,12 +64,10 @@ class OnboardingScreen extends StatelessWidget {
         onFinish: () {
           Navigator.pushReplacement(
             context,
-            MaterialPageRoute(builder: (context) => LoginScreen()),
+            MaterialPageRoute(builder: (context) => const WelcomeScreen()),
           );
         },
       ),
     );
   }
 }
-
-

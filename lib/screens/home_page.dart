@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:habit_tracking/models/habit.dart';
 import 'package:habit_tracking/screens/habit_tracking_screen.dart';
 import 'package:habit_tracking/services/habite_service.dart';
@@ -53,23 +54,23 @@ class _HomePageState extends State<HomePage> {
   Widget getCategoryImage(String category) {
     switch (category.toLowerCase()) {
       case 'sports':
-        return Image.asset('assets/sports.png', width: 40);
+        return Image.asset('assets/sports.png', width: 40.w);
       case 'study':
-        return Image.asset('assets/study.png', width: 40);
+        return Image.asset('assets/study.png', width: 40.w);
       case 'work':
-        return Image.asset('assets/work.png', width: 40);
+        return Image.asset('assets/work.png', width: 40.w);
       case 'food':
-        return Image.asset('assets/food.png', width: 40);
+        return Image.asset('assets/food.png', width: 40.w);
       case 'sleep':
-        return Image.asset('assets/sleep.png', width: 40);
+        return Image.asset('assets/sleep.png', width: 40.w);
       case 'worship':
-        return Image.asset('assets/worship.png', width: 40);
+        return Image.asset('assets/worship.png', width: 40.w);
       case 'drink':
-        return Image.asset('assets/drink.png', width: 40);
+        return Image.asset('assets/drink.png', width: 40.w);
       case 'entertainment':
-        return Image.asset('assets/entertainment.png', width: 40);
+        return Image.asset('assets/entertainment.png', width: 40.w);
       default:
-        return Image.asset('assets/default_icon.png', width: 40);
+        return Image.asset('assets/default_icon.png', width: 40.w);
     }
   }
 
@@ -96,16 +97,21 @@ class _HomePageState extends State<HomePage> {
   // Helper function to get the status text (same as before)
   Widget getStatusText(Habit habit, Function() navigator) {
     return habit.status.toLowerCase() == 'complete'
-        ? const Text('Complete',
+        ? Text('Complete',
             style: TextStyle(
-                color: Colors.deepPurple, fontWeight: FontWeight.bold))
+                color: Colors.deepPurple,
+                fontWeight: FontWeight.bold,
+                fontSize: 13.sp))
         : GestureDetector(
             onTap: () {
               navigator();
             },
-            child: const Text(
+            child: Text(
               'Start',
-              style: TextStyle(color: Colors.blue, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                  color: Colors.blue,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 13.sp),
             ),
           );
   }
@@ -133,7 +139,7 @@ class _HomePageState extends State<HomePage> {
           );
         },
         backgroundColor: Colors.deepPurple.shade700,
-        child: const Icon(Icons.add, color: Colors.white, size: 30),
+        child: Icon(Icons.add, color: Colors.white, size: 30.r),
       ),
       body: Container(
         decoration: const BoxDecoration(
@@ -146,17 +152,17 @@ class _HomePageState extends State<HomePage> {
             ],
           ),
         ),
-        padding: const EdgeInsets.all(20),
+        padding: EdgeInsets.all(20.r),
         child: Column(
           children: [
             // Welcome message with user's name
             Card(
               shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16)),
-              elevation: 8,
+                  borderRadius: BorderRadius.circular(16.r)),
+              elevation: 4,
               child: Container(
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(16),
+                  borderRadius: BorderRadius.circular(16.r),
                   gradient: const LinearGradient(
                     colors: [
                       Color(0xFF8A2387),
@@ -168,7 +174,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.all(16.0),
+                  padding: EdgeInsets.all(16.0.r),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -183,15 +189,15 @@ class _HomePageState extends State<HomePage> {
                                   TextSpan(
                                     text: 'Welcome back, ',
                                     style: TextStyle(
-                                      fontSize: 18,
+                                      fontSize: 16.sp,
                                       fontWeight: FontWeight.bold,
                                       color: Colors.white.withOpacity(0.8),
                                     ),
                                   ),
                                   TextSpan(
                                     text: '${user?.displayName ?? 'User'}!',
-                                    style: const TextStyle(
-                                      fontSize: 18,
+                                    style: TextStyle(
+                                      fontSize: 15.sp,
                                       fontWeight: FontWeight.bold,
                                       color: Colors.white,
                                     ),
@@ -199,22 +205,26 @@ class _HomePageState extends State<HomePage> {
                                 ],
                               ),
                             ),
-                            const SizedBox(height: 8),
+                            SizedBox(
+                                height:
+                                    MediaQuery.of(context).size.height / 70),
                             Text(
                               'Complete $completedTasksToday/$totalTasksToday task today',
                               style: TextStyle(
-                                fontSize: 16,
+                                fontSize: 14.sp,
                                 color: Colors.white.withOpacity(0.8),
                               ),
                             ),
-                            const SizedBox(height: 16),
+                            SizedBox(
+                                height:
+                                    MediaQuery.of(context).size.height / 70),
                             SliderTheme(
                               data: SliderTheme.of(context).copyWith(
-                                trackHeight: 8,
+                                trackHeight: 8.h,
                                 activeTrackColor: Colors.pinkAccent,
                                 inactiveTrackColor: Colors.purple.shade100,
-                                thumbShape: const RoundSliderThumbShape(
-                                    enabledThumbRadius: 8),
+                                thumbShape: RoundSliderThumbShape(
+                                    enabledThumbRadius: 8.r),
                                 overlayShape: const RoundSliderOverlayShape(
                                     overlayRadius: 14),
                                 thumbColor: Colors.white,
@@ -242,15 +252,15 @@ class _HomePageState extends State<HomePage> {
                       ),
                       Image.asset(
                         'assets/calender.png',
-                        width: 130,
-                        height: 130,
+                        width: 100.w,
+                        height: 100.h,
                       ),
                     ],
                   ),
                 ),
               ),
             ),
-            const SizedBox(height: 20),
+            SizedBox(height: MediaQuery.of(context).size.height / 70),
             // Days of the week to select
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
@@ -266,16 +276,17 @@ class _HomePageState extends State<HomePage> {
                       });
                     },
                     child: Container(
-                      margin: const EdgeInsets.symmetric(horizontal: 8),
-                      padding: const EdgeInsets.all(12),
+                      margin: EdgeInsets.symmetric(horizontal: 8.w),
+                      padding: EdgeInsets.all(10.r),
                       decoration: BoxDecoration(
                         color: isSelected ? Colors.deepPurple : Colors.white,
-                        borderRadius: BorderRadius.circular(8),
+                        borderRadius: BorderRadius.circular(8.r),
                         border: Border.all(color: Colors.deepPurple),
                       ),
                       child: Text(
                         DateFormat('EEE, MMM d').format(day),
                         style: TextStyle(
+                          fontSize: 13.sp,
                           color: isSelected ? Colors.white : Colors.deepPurple,
                           fontWeight: FontWeight.bold,
                         ),
@@ -285,7 +296,7 @@ class _HomePageState extends State<HomePage> {
                 }).toList(),
               ),
             ),
-            const SizedBox(height: 20),
+            SizedBox(height: MediaQuery.of(context).size.height / 70),
 
             // List of habits for the selected day
             Expanded(
@@ -307,11 +318,11 @@ class _HomePageState extends State<HomePage> {
 
                     // إذا كانت القائمة فارغة بعد الفلترة، اعرض رسالة "لا توجد عادات"
                     if (habits.isEmpty) {
-                      return const Center(
+                      return Center(
                         child: Text(
                           'No habits found for the selected date.',
                           style: TextStyle(
-                            fontSize: 18,
+                            fontSize: 18.sp,
                             fontWeight: FontWeight.bold,
                             color: Colors.deepPurple,
                           ),
@@ -341,58 +352,44 @@ class _HomePageState extends State<HomePage> {
                             });
                           },
                           child: Container(
-                            margin: const EdgeInsets.symmetric(vertical: 6),
-                            decoration: getCardDecoration(habit.status),
-                            child: Padding(
-                              padding: const EdgeInsets.all(16.0),
-                              child: Row(
-                                children: [
-                                  getCategoryImage(habit.category),
-                                  const SizedBox(width: 12),
-                                  Expanded(
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          '${habit.timeTaken} minutes ${habit.habitName}',
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 16,
-                                              color: habit.status == 'complete'
-                                                  ? Colors.white
-                                                  : Colors.purple),
-                                        ),
-                                        const SizedBox(height: 5),
-                                        getStatusText(habit, () {
-                                          Navigator.of(context)
-                                              .push(MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      HabitTrackingScreen(
-                                                          habitId: habit.id,
-                                                          habitName:
-                                                              habit.habitName,
-                                                          durationMinutes:
-                                                              habit.timeTaken,
-                                                          habitImage:
-                                                              getCategoryImage(
-                                                                  habit
-                                                                      .category))))
-                                              .then((completed) {
-                                            if (completed == true) {
-                                              // إذا كانت العادة مكتملة، قم بتحديث الـ Slider
-                                              _calculateTasksForSelectedDate(
-                                                  selectedDate);
-                                            }
-                                          });
-                                        }),
-                                      ],
-                                    ),
+                              margin: EdgeInsets.symmetric(vertical: 6.h),
+                              decoration: getCardDecoration(habit.status),
+                              child: ListTile(
+                                leading: getCategoryImage(
+                                    habit.category), // الصورة بجانب العنصر
+                                title: Text(
+                                  '${habit.timeTaken} minutes ${habit.habitName}',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 14.sp,
+                                    color: habit.status == 'complete'
+                                        ? Colors.white
+                                        : Colors.purple,
                                   ),
-                                ],
-                              ),
-                            ),
-                          ),
+                                ),
+                                subtitle: getStatusText(habit, () {
+                                  Navigator.of(context)
+                                      .push(MaterialPageRoute(
+                                          builder: (context) =>
+                                              HabitTrackingScreen(
+                                                habitId: habit.id,
+                                                habitName: habit.habitName,
+                                                durationMinutes:
+                                                    habit.timeTaken,
+                                                habitImage: getCategoryImage(
+                                                    habit.category),
+                                              )))
+                                      .then((completed) {
+                                    if (completed == true) {
+                                      // إذا كانت العادة مكتملة، قم بتحديث الـ Slider
+                                      _calculateTasksForSelectedDate(
+                                          selectedDate);
+                                    }
+                                  });
+                                }),
+                                contentPadding: EdgeInsets.symmetric(
+                                    vertical: 5.w, horizontal: 12.h),
+                              )),
                         );
                       },
                     );
