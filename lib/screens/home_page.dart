@@ -1,9 +1,11 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:habit_tracking/models/habit.dart';
 import 'package:habit_tracking/screens/habit_tracking_screen.dart';
 import 'package:habit_tracking/services/habite_service.dart';
 import 'package:habit_tracking/widgets/add_habit_sheet.dart';
+import 'package:habit_tracking/widgets/habit_edit.dart';
 import 'package:intl/intl.dart';
 import 'package:firebase_auth/firebase_auth.dart'; // For user information
 
@@ -387,6 +389,30 @@ class _HomePageState extends State<HomePage> {
                                     }
                                   });
                                 }),
+
+                                trailing: habit.status != 'complete'
+                                    ? IconButton(
+                                        icon: const Icon(
+                                          Icons.edit_note_outlined,
+                                          color: Colors.purple,
+                                          size: 30,
+                                        ),
+                                        onPressed: () {
+                                          AwesomeDialog(
+                                            context: context,
+                                            dialogType: DialogType.noHeader,
+                                            body: EditHabitDialog(
+                                              habit: habit,
+                                              onHabitUpdated: () {
+                                                // إعادة تحميل العادات هنا
+                                                _calculateTasksForSelectedDate(
+                                                    selectedDate);
+                                              },
+                                            ),
+                                          ).show();
+                                        },
+                                      )
+                                    : null,
                                 contentPadding: EdgeInsets.symmetric(
                                     vertical: 5.w, horizontal: 12.h),
                               )),
