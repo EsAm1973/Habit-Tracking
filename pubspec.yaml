@@ -50,7 +50,12 @@ dependencies:
   flutter_native_splash:
   flutter_onboarding_slider:
   lottie:
-
+  flutter_screenutil: ^5.9.3
+  rive: ^0.13.14
+  flutter_bloc: ^8.1.6
+  awesome_dialog: ^3.2.1
+  cron:
+  awesome_notifications: ^0.10.0
 
 dev_dependencies:
   flutter_test:
