@@ -1,3 +1,4 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:habit_tracking/screens/login_screen.dart';
@@ -29,30 +30,68 @@ class _SignupscreenState extends State<Signupscreen> {
           email: _emailController.text.trim(),
           password: _passwordController.text.trim(),
         );
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => const LoginScreen()),
-        );
+
+        // تحديث displayName بالاسم الكامل
+        await userCredential.user!
+            .updateDisplayName(_fullNameController.text.trim());
+
+        // تأكد من إعادة تحميل البيانات المحدثة للمستخدم
+        await userCredential.user!.reload();
+
+        // إرسال رابط التحقق إلى البريد الإلكتروني
+        await userCredential.user!.sendEmailVerification();
+
+        // عرض رسالة تأكيد بأن رابط التحقق تم إرساله
+        _showVerificationDialog();
       } on FirebaseAuthException catch (e) {
-        _showErrorDialog(e.message ?? "An error occurred");
+        switch (e.code) {
+          case 'email-already-in-use':
+            _showErrorDialog("This email is already in use.");
+            break;
+          case 'invalid-email':
+            _showErrorDialog("The email address is not valid.");
+            break;
+          case 'operation-not-allowed':
+            _showErrorDialog("Email/Password accounts are not enabled.");
+            break;
+          case 'weak-password':
+            _showErrorDialog("The password is too weak.");
+            break;
+          default:
+            _showErrorDialog(e.message ?? "An error occurred");
+        }
       }
     }
   }
 
   void _showErrorDialog(String message) {
-    showDialog(
+    AwesomeDialog(
       context: context,
-      builder: (context) => AlertDialog(
-        title: const Text("Error"),
-        content: Text(message),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: const Text("OK"),
-          ),
-        ],
-      ),
-    );
+      dialogType: DialogType.error,
+      animType: AnimType.topSlide,
+      title: 'Error',
+      desc: message,
+      btnOkOnPress: () {
+        // Optionally do something on OK press
+      },
+    ).show();
+  }
+
+  void _showVerificationDialog() {
+    AwesomeDialog(
+      context: context,
+      dialogType: DialogType.info,
+      animType: AnimType.topSlide,
+      title: 'Verification Email Sent',
+      desc:
+          'A verification link has been sent to your email. Please check your inbox.',
+      btnOkOnPress: () {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const LoginScreen()),
+        );
+      },
+    ).show();
   }
 
   @override

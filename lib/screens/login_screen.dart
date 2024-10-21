@@ -1,3 +1,4 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:habit_tracking/screens/sign_up_screen.dart';
@@ -104,30 +105,59 @@ class _LoginScreenState extends State<LoginScreen> {
   void validateEmailAndPassword() async {
     if (formKey.currentState!.validate()) {
       try {
-        await FirebaseAuth.instance.signInWithEmailAndPassword(
+        final credential =
+            await FirebaseAuth.instance.signInWithEmailAndPassword(
           email: emailController.text.trim(),
           password: passwordController.text.trim(),
         );
-        addSpecifcAnimationAction(controllerSuccess);
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => const ButtonNavBar()),
-        );
+        //if the user verify your email go to homepage.
+        if (credential.user!.emailVerified) {
+          addSpecifcAnimationAction(controllerSuccess);
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => const ButtonNavBar()),
+          );
+        } else {
+          //else show dialog to go to email to verify account
+          AwesomeDialog(
+            context: context,
+            dialogType: DialogType.info,
+            animType: AnimType.rightSlide,
+            title: 'Verified Email',
+            desc: 'Please go to your email and verify the account',
+          ).show();
+        }
       } on FirebaseAuthException catch (e) {
         addSpecifcAnimationAction(controllerFail);
-        showDialog(
-          context: context,
-          builder: (context) => AlertDialog(
-            title: const Text("Error"),
-            content: Text(e.message ?? "An error occurred"),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.of(context).pop(),
-                child: const Text("OK"),
-              ),
-            ],
-          ),
-        );
+
+        if (e.code == 'user-not-found') {
+          // Show dialog for non-existent email
+          AwesomeDialog(
+            context: context,
+            dialogType: DialogType.error,
+            title: 'Error',
+            desc: 'The email you entered does not exist.',
+            btnOkOnPress: () {},
+          ).show();
+        } else if (e.code == 'wrong-password') {
+          // Show dialog for incorrect password
+          AwesomeDialog(
+            context: context,
+            dialogType: DialogType.error,
+            title: 'Error',
+            desc: 'The password you entered is incorrect.',
+            btnOkOnPress: () {},
+          ).show();
+        } else {
+          // General error dialog
+          AwesomeDialog(
+            context: context,
+            dialogType: DialogType.error,
+            title: 'Error',
+            desc: e.message ?? 'An error occurred. Please try again.',
+            btnOkOnPress: () {},
+          ).show();
+        }
       }
     } else {
       addSpecifcAnimationAction(controllerFail);
