@@ -1,4 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:habit_tracking/widgets/buttom_nav_bar.dart';
 import 'package:lottie/lottie.dart';
 
 import 'Onboardig_screen.dart';
@@ -14,10 +16,15 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
     Future.delayed(Duration(seconds: 5), () {
       Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => OnboardingScreen()),
+        MaterialPageRoute(
+            builder: (context) => (FirebaseAuth.instance.currentUser != null &&
+                    FirebaseAuth.instance.currentUser!.emailVerified)
+                ? ButtonNavBar()
+                : OnboardingScreen()),
       );
     });
   }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -57,8 +64,7 @@ class _SplashScreenState extends State<SplashScreen> {
                     decoration: TextDecoration.none, // Ensure no underline
                   ),
                 ),
-              )
-          ),
+              )),
         ],
       ),
     );
