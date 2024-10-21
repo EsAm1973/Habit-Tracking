@@ -392,10 +392,10 @@ class _HomePageState extends State<HomePage> {
 
                                 trailing: habit.status != 'complete'
                                     ? IconButton(
-                                        icon: const Icon(
+                                        icon: Icon(
                                           Icons.edit_note_outlined,
                                           color: Colors.purple,
-                                          size: 30,
+                                          size: 28.r,
                                         ),
                                         onPressed: () {
                                           AwesomeDialog(

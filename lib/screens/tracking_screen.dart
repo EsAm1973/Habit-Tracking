@@ -1,5 +1,6 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:habit_tracking/models/habit.dart';
 import 'package:habit_tracking/services/habite_service.dart';
 
@@ -97,9 +98,9 @@ class _TrackingScreenState extends State<TrackingScreen> {
       appBar: AppBar(
         backgroundColor: const Color(0xFFB3E5FC),
         centerTitle: true,
-        title: const Text('Tracking',
+        title: Text('Tracking',
             style: TextStyle(
-                fontSize: 24,
+                fontSize: 17.sp,
                 fontWeight: FontWeight.bold,
                 color: Colors.purple)),
       ),
@@ -116,7 +117,7 @@ class _TrackingScreenState extends State<TrackingScreen> {
         ),
         child: SafeArea(
           child: Padding(
-            padding: const EdgeInsets.all(16.0),
+            padding: EdgeInsets.all(16.0.r),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -124,16 +125,16 @@ class _TrackingScreenState extends State<TrackingScreen> {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 10, vertical: 5),
+                      padding:  EdgeInsets.symmetric(
+                          horizontal: 10.h, vertical: 5.w),
                       decoration: BoxDecoration(
                           color: const Color.fromARGB(255, 185, 197, 248),
-                          borderRadius: BorderRadius.circular(20)),
+                          borderRadius: BorderRadius.circular(20.r)),
                       child: DropdownButton<String>(
                         icon: const Icon(Icons.keyboard_arrow_down_sharp),
-                        style: const TextStyle(
+                        style:  TextStyle(
                             color: Colors.purple,
-                            fontSize: 18,
+                            fontSize: 15.sp,
                             fontWeight: FontWeight.bold),
                         value: selectedWeek,
                         items:
@@ -159,11 +160,11 @@ class _TrackingScreenState extends State<TrackingScreen> {
                   decoration: BoxDecoration(
                     color: const Color.fromARGB(
                         255, 183, 170, 247), // Violet shade
-                    borderRadius: BorderRadius.circular(16),
+                    borderRadius: BorderRadius.circular(16.r),
                   ),
-                  padding: const EdgeInsets.all(16),
+                  padding:  EdgeInsets.all(16.r),
                   child: AspectRatio(
-                    aspectRatio: 1.5,
+                    aspectRatio: 1.5.r,
                     child: AnimatedSwitcher(
                       duration: const Duration(milliseconds: 500),
                       child: BarChart(
