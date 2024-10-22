@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:habit_tracking/screens/contact_us_view.dart';
+import 'package:habit_tracking/screens/privacy_policy_view.dart';
+import 'package:habit_tracking/screens/terms_and_conditions_view.dart';
+
+import '../screens/about_us_view.dart';
 
 
 class MoreInformationContainer extends StatelessWidget {
@@ -23,10 +28,10 @@ class MoreInformationContainer extends StatelessWidget {
       "theme",
     ];
     List onChanged = [
-      // const AboutUsView(),
-      // const TermsAndConditions(),
-      // const ContactUs(),
-      // const Privacy(),
+      const AboutUsView(),
+      const TermsAndConditionsView(),
+      const ContactUsView(),
+      const PrivacyPolicyView(),
     ];
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -66,19 +71,9 @@ class MoreInformationContainer extends StatelessWidget {
               itemCount: titles.length,
               itemBuilder: (context, index) {
                 return GestureDetector(
-                  onTap: index == 0
-                      ? () {
-                          // showDialog(
-                          //     context: context,
-                          //     builder: (context) {
-                          //       return const LanguageDialog();
-                          //     });
-                        }
-                      : index == 5
-                          ? () {}
-                          : () {
+                  onTap:  () {
                               Navigator.of(context).push(MaterialPageRoute(
-                                  builder: (context) => onChanged[index - 1]));
+                                  builder: (context) => onChanged[index]));
                             },
                   child: Container(
                     margin: const EdgeInsets.all(12),
@@ -94,21 +89,7 @@ class MoreInformationContainer extends StatelessWidget {
                           color: Color(0xff5C5C5C),
                         ),
                       ),
-                      // leading: Image.asset(
-                      //     "assets/icons/profile/${icons[index]}.png"),
                       trailing:
-                      // index == 0
-                      //     ? const Text(
-                      //         "ENG",
-                      //         style: TextStyle(
-                      //           fontWeight: FontWeight.w500,
-                      //           fontSize: 15,
-                      //           color:Colors.purpleAccent,
-                      //         ),
-                      //       )
-                      //     : index == 5
-                      //         ? Text("data")
-                      //         :
                       Icon(Icons.arrow_forward_ios),
                     ),
                   ),

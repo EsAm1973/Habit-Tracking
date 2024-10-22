@@ -81,7 +81,7 @@ class LogOutContainer extends StatelessWidget {
                           : const Color(0xffDF1818),
                     ),
                   ),
-                  leading: Image.asset(paymentIcons[index]),
+                  //leading: Image.asset(paymentIcons[index]),
                 ),
               ),
             );

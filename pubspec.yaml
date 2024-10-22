@@ -47,6 +47,8 @@ dependencies:
   google_nav_bar: ^5.0.6
   intl: ^0.19.0
   fl_chart: ^0.69.0
+  flutter_hooks:
+  form_builder_validators:
 
 dev_dependencies:
   flutter_test:

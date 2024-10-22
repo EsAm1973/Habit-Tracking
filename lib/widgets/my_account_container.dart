@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 
+import '../screens/edit_account_view.dart';
+import '../screens/edit_password_view.dart';
+import '../screens/notifications_view.dart';
+
 class MyAccountContainer extends StatelessWidget {
   const MyAccountContainer({super.key});
 
@@ -41,6 +45,17 @@ class MyAccountContainer extends StatelessWidget {
     ];
 
     List<Function> functions = [
+      () {
+        Navigator.of(context)
+            .push(MaterialPageRoute(builder: (context) => const EditAccountView()));
+      },
+      () {
+        Navigator.of(context).push(
+            MaterialPageRoute(builder: (context) => const EditPasswordView()));
+      },() {
+        Navigator.of(context).push(
+            MaterialPageRoute(builder: (context) => const NotificationsView()));
+      },
       // () {
       //   navigateIfLoggedIn(const EditProfileView(), context);
       // },
@@ -117,8 +132,7 @@ class MyAccountContainer extends StatelessWidget {
                       ),
                       // leading: Image.asset(
                       //     "assets/icons/profile/${icons[index]}.png"),
-                      trailing:
-                      Icon(Icons.arrow_forward_ios),
+                      trailing: Icon(Icons.arrow_forward_ios),
                     ),
                   ),
                 );
