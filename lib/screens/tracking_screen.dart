@@ -1,5 +1,6 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:habit_tracking/models/habit.dart';
 import 'package:habit_tracking/services/habite_service.dart';
 
@@ -97,9 +98,9 @@ class _TrackingScreenState extends State<TrackingScreen> {
       appBar: AppBar(
         backgroundColor: const Color(0xFFB3E5FC),
         centerTitle: true,
-        title: const Text('Tracking',
+        title: Text('Tracking',
             style: TextStyle(
-                fontSize: 24,
+                fontSize: 17.sp,
                 fontWeight: FontWeight.bold,
                 color: Colors.purple)),
       ),
@@ -115,172 +116,175 @@ class _TrackingScreenState extends State<TrackingScreen> {
           ),
         ),
         child: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 10, vertical: 5),
-                      decoration: BoxDecoration(
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: EdgeInsets.all(16.0.r),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Container(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 10.h, vertical: 5.w),
+                        decoration: BoxDecoration(
                           color: const Color.fromARGB(255, 185, 197, 248),
-                          borderRadius: BorderRadius.circular(20)),
-                      child: DropdownButton<String>(
-                        icon: const Icon(Icons.keyboard_arrow_down_sharp),
-                        style: const TextStyle(
-                            color: Colors.purple,
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold),
-                        value: selectedWeek,
-                        items:
-                            ['This week', 'Previous week'].map((String week) {
-                          return DropdownMenuItem<String>(
-                            value: week,
-                            child: Text(week),
-                          );
-                        }).toList(),
-                        onChanged: (String? newWeek) {
-                          setState(() {
-                            selectedWeek = newWeek!;
-                            _fetchHabits();
-                          });
-                        },
+                          borderRadius: BorderRadius.circular(20.r),
+                        ),
+                        child: DropdownButton<String>(
+                          icon: const Icon(Icons.keyboard_arrow_down_sharp),
+                          style: TextStyle(
+                              color: Colors.purple,
+                              fontSize: 15.sp,
+                              fontWeight: FontWeight.bold),
+                          value: selectedWeek,
+                          items:
+                              ['This week', 'Previous week'].map((String week) {
+                            return DropdownMenuItem<String>(
+                              value: week,
+                              child: Text(week),
+                            );
+                          }).toList(),
+                          onChanged: (String? newWeek) {
+                            setState(() {
+                              selectedWeek = newWeek!;
+                              _fetchHabits();
+                            });
+                          },
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 20),
-                // Bar Chart Section inside a Container with Violet Shades
-                Container(
-                  decoration: BoxDecoration(
-                    color: const Color.fromARGB(
-                        255, 183, 170, 247), // Violet shade
-                    borderRadius: BorderRadius.circular(16),
+                    ],
                   ),
-                  padding: const EdgeInsets.all(16),
-                  child: AspectRatio(
-                    aspectRatio: 1.5,
-                    child: AnimatedSwitcher(
-                      duration: const Duration(milliseconds: 500),
-                      child: BarChart(
-                        key: ValueKey<int>(
-                            habits.length), // Important for animation
-                        BarChartData(
-                          borderData: FlBorderData(show: false),
-                          gridData:
-                              const FlGridData(show: false), // Hide grid lines
-                          titlesData: FlTitlesData(
-                            rightTitles: const AxisTitles(
-                                sideTitles: SideTitles(showTitles: false)),
-                            show: true,
-                            leftTitles: const AxisTitles(
-                              sideTitles: SideTitles(
-                                  showTitles: false), // Remove left numbers
-                            ),
-                            topTitles: const AxisTitles(
-                              sideTitles: SideTitles(
-                                  showTitles: false), // Remove top numbers
-                            ),
-                            bottomTitles: AxisTitles(
-                              sideTitles: SideTitles(
-                                showTitles: true,
-                                getTitlesWidget:
-                                    (double value, TitleMeta meta) {
-                                  const style = TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.bold);
+                  SizedBox(height: MediaQuery.of(context).size.height / 40),
+                  // Bar Chart Section inside a Container with Violet Shades
+                  Container(
+                    decoration: BoxDecoration(
+                      color: const Color.fromARGB(
+                          255, 183, 170, 247), // Violet shade
+                      borderRadius: BorderRadius.circular(16.r),
+                    ),
+                    padding: EdgeInsets.all(16.r),
+                    child: AspectRatio(
+                      aspectRatio: 16.0 / 9.0,
+                      child: AnimatedSwitcher(
+                        duration: const Duration(milliseconds: 500),
+                        child: BarChart(
+                          key: ValueKey<int>(
+                              habits.length), // Important for animation
+                          BarChartData(
+                            borderData: FlBorderData(show: false),
+                            gridData: const FlGridData(
+                                show: false), // Hide grid lines
+                            titlesData: FlTitlesData(
+                              rightTitles: const AxisTitles(
+                                  sideTitles: SideTitles(showTitles: false)),
+                              show: true,
+                              leftTitles: const AxisTitles(
+                                sideTitles: SideTitles(
+                                    showTitles: false), // Remove left numbers
+                              ),
+                              topTitles: const AxisTitles(
+                                sideTitles: SideTitles(
+                                    showTitles: false), // Remove top numbers
+                              ),
+                              bottomTitles: AxisTitles(
+                                sideTitles: SideTitles(
+                                  showTitles: true,
+                                  getTitlesWidget:
+                                      (double value, TitleMeta meta) {
+                                    const style = TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.bold);
 
-                                  // List of day names from Saturday to Friday
-                                  const List<String> daysOfWeek = [
-                                    'Sat',
-                                    'Sun',
-                                    'Mon',
-                                    'Tue',
-                                    'Wed',
-                                    'Thu',
-                                    'Fri'
-                                  ];
+                                    // List of day names from Saturday to Friday
+                                    const List<String> daysOfWeek = [
+                                      'Sat',
+                                      'Sun',
+                                      'Mon',
+                                      'Tue',
+                                      'Wed',
+                                      'Thu',
+                                      'Fri'
+                                    ];
 
-                                  // Get the day name based on the index value
-                                  String dayName =
-                                      daysOfWeek[value.toInt() % 7];
+                                    // Get the day name based on the index value
+                                    String dayName =
+                                        daysOfWeek[value.toInt() % 7];
 
-                                  return SideTitleWidget(
-                                    axisSide: meta.axisSide,
-                                    space: 4.0,
-                                    child: Text(dayName, style: style),
-                                  );
-                                },
+                                    return SideTitleWidget(
+                                      axisSide: meta.axisSide,
+                                      space: 4.0.r,
+                                      child: Text(dayName, style: style),
+                                    );
+                                  },
+                                ),
                               ),
                             ),
+                            barGroups: _buildBarGroups(),
+                            barTouchData: BarTouchData(
+                                enabled: false), // Disable tooltips
                           ),
-                          barGroups: _buildBarGroups(),
-                          barTouchData:
-                              BarTouchData(enabled: false), // Disable tooltips
                         ),
                       ),
                     ),
                   ),
-                ),
-                const SizedBox(height: 20),
-
-                const Text(
-                  'Progress of this week',
-                  style: TextStyle(
-                      color: Colors.purple,
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold),
-                ),
-                const SizedBox(height: 10),
-
-                loading
-                    ? const Center(
-                        child: CircularProgressIndicator(),
-                      )
-                    : Expanded(
-                        child: habits.isEmpty
-                            ? const Center(
-                                child: Text(
-                                    'No habits found for the selected week'))
-                            : ListView.builder(
-                                itemCount: habits.length,
-                                itemBuilder: (context, index) {
-                                  final habit = habits[index];
-                                  return Card(
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(16.0)),
-                                    margin: const EdgeInsets.symmetric(
-                                        vertical: 8.0),
-                                    child: ListTile(
-                                      leading: getCategoryImage(habit.category),
-                                      title: Text(habit.habitName,
-                                          style: const TextStyle(
-                                              color: Colors.purple,
-                                              fontWeight: FontWeight.bold)),
-                                      subtitle: Text(
-                                          'Time Taken: ${habit.timeTaken} minutes',
-                                          style: const TextStyle(
-                                              color: Colors.black)),
-                                      trailing: Text(
-                                        habit.status,
+                  SizedBox(height: MediaQuery.of(context).size.height / 60),
+                  Text(
+                    'Progress of this week',
+                    style: TextStyle(
+                        color: Colors.purple,
+                        fontSize: 15.sp,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(height: MediaQuery.of(context).size.height / 60),
+                  loading
+                      ? const Center(child: CircularProgressIndicator())
+                      : habits.isEmpty
+                          ? const Center(
+                              child:
+                                  Text('No habits found for the selected week'))
+                          : ListView.builder(
+                              shrinkWrap:
+                                  true, // Make ListView take only needed height
+                              physics:
+                                  const NeverScrollableScrollPhysics(), // Disable scrolling in ListView
+                              itemCount: habits.length,
+                              itemBuilder: (context, index) {
+                                final habit = habits[index];
+                                return Card(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(16.0.r),
+                                  ),
+                                  margin: EdgeInsets.symmetric(vertical: 8.0),
+                                  child: ListTile(
+                                    leading: getCategoryImage(habit.category),
+                                    title: Text(habit.habitName,
                                         style: TextStyle(
-                                            color: habit.status == 'complete'
-                                                ? Colors.purple
-                                                : Colors.red,
-                                            fontWeight: FontWeight.bold),
-                                      ),
+                                            fontSize: 14.sp,
+                                            color: Colors.purple,
+                                            fontWeight: FontWeight.bold)),
+                                    subtitle: Text(
+                                        'Time Taken: ${habit.timeTaken} minutes',
+                                        style: TextStyle(
+                                            fontSize: 13.sp,
+                                            color: Colors.black)),
+                                    trailing: Text(
+                                      habit.status,
+                                      style: TextStyle(
+                                          color: habit.status == 'complete'
+                                              ? Colors.purple
+                                              : Colors.red,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 12.sp),
                                     ),
-                                  );
-                                },
-                              ),
-                      ),
-              ],
+                                  ),
+                                );
+                              },
+                            ),
+                ],
+              ),
             ),
           ),
         ),
@@ -300,8 +304,8 @@ class _TrackingScreenState extends State<TrackingScreen> {
               barRods: [
                 BarChartRodData(
                   toY: completionRate, // Display the ratio of completed/total
-                  width: 20,
-                  borderRadius: BorderRadius.circular(8),
+                  width: 15.w,
+                  borderRadius: BorderRadius.circular(8.r),
                   gradient: const LinearGradient(
                     colors: [
                       Color.fromARGB(255, 223, 52, 241),
@@ -323,23 +327,23 @@ class _TrackingScreenState extends State<TrackingScreen> {
   Widget getCategoryImage(String category) {
     switch (category.toLowerCase()) {
       case 'sports':
-        return Image.asset('assets/sports.png', width: 40);
+        return Image.asset('assets/sports.png', width: 40.w);
       case 'study':
-        return Image.asset('assets/study.png', width: 40);
+        return Image.asset('assets/study.png', width: 40.w);
       case 'work':
-        return Image.asset('assets/work.png', width: 40);
+        return Image.asset('assets/work.png', width: 40.w);
       case 'food':
-        return Image.asset('assets/food.png', width: 40);
+        return Image.asset('assets/food.png', width: 40.w);
       case 'sleep':
-        return Image.asset('assets/sleep.png', width: 40);
+        return Image.asset('assets/sleep.png', width: 40.w);
       case 'worship':
-        return Image.asset('assets/worship.png', width: 40);
+        return Image.asset('assets/worship.png', width: 40.w);
       case 'drink':
-        return Image.asset('assets/drink.png', width: 40);
+        return Image.asset('assets/drink.png', width: 40.w);
       case 'entertainment':
-        return Image.asset('assets/entertainment.png', width: 40);
+        return Image.asset('assets/entertainment.png', width: 40.w);
       default:
-        return Image.asset('assets/default_icon.png', width: 40);
+        return Image.asset('assets/default_icon.png', width: 40.w);
     }
   }
 }

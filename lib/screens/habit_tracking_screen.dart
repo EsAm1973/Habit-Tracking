@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'dart:async';
 
 import 'package:habit_tracking/services/habite_service.dart';
@@ -88,7 +89,7 @@ class _HabitTrackingScreenState extends State<HabitTrackingScreen>
       appBar: AppBar(
         title: Text(
           widget.habitName,
-          style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+          style: TextStyle(fontSize: 20.sp, fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
         backgroundColor: const Color(0xFFB3E5FC),
@@ -105,21 +106,21 @@ class _HabitTrackingScreenState extends State<HabitTrackingScreen>
             ],
           ),
         ),
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
+        padding: EdgeInsets.symmetric(horizontal: 20.h, vertical: 20.w),
         child: Column(
           children: [
             Stack(
               alignment: Alignment.center,
               children: [
                 SizedBox(
-                  width: 200,
-                  height: 200,
+                  width: 180.w,
+                  height: 180.h,
                   child: AnimatedBuilder(
                     animation: _animationController,
                     builder: (context, child) {
                       return CircularProgressIndicator(
                         value: _animationController.value, // القيمة المتغيرة
-                        strokeWidth: 20,
+                        strokeWidth: 15.w,
                         backgroundColor:
                             const Color.fromARGB(255, 252, 252, 252),
                         valueColor: AlwaysStoppedAnimation<Color>(
@@ -129,69 +130,68 @@ class _HabitTrackingScreenState extends State<HabitTrackingScreen>
                   ),
                 ),
                 SizedBox(
-                  width: 160,
-                  height: 160,
+                  width: 150.w,
+                  height: 150.h,
                   child: widget.habitImage,
                 ),
               ],
             ),
-            const SizedBox(height: 40),
+            SizedBox(height: MediaQuery.of(context).size.height / 30),
             Text(
               'Time Left',
-              style: TextStyle(fontSize: 20, color: Colors.deepPurple.shade600),
+              style:
+                  TextStyle(fontSize: 20.sp, color: Colors.deepPurple.shade600),
             ),
             Text(
               "${(_remainingSeconds ~/ 60).toString().padLeft(2, '0')}:${(_remainingSeconds % 60).toString().padLeft(2, '0')}",
-              style: const TextStyle(
-                  fontSize: 48,
+              style: TextStyle(
+                  fontSize: 35.sp,
                   fontWeight: FontWeight.bold,
                   color: Colors.deepPurple),
             ),
-            const SizedBox(height: 30),
+            SizedBox(height: MediaQuery.of(context).size.height / 50),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 IconButton(
                   onPressed: _pauseTimer,
-                  icon: const Icon(
+                  icon: Icon(
                     Icons.pause,
-                    size: 40,
+                    size: 40.r,
                     color: Colors.deepPurple,
                   ),
                 ),
                 Container(
-                  width: 70,
-                  height: 70,
+                  width: 70.w,
+                  height: 60.h,
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(100),
+                    borderRadius: BorderRadius.circular(100.r),
                     color: Colors.deepPurple,
                   ),
                   child: IconButton(
                     onPressed: _completeHabit,
-                    icon: const Icon(
+                    icon: Icon(
                       Icons.check_circle_outline_sharp,
                       color: Colors.white,
-                      size: 40,
+                      size: 40.r,
                     ),
                   ),
                 ),
                 IconButton(
                   onPressed: _isRunning ? null : _startTimer,
-                  icon: const Icon(
+                  icon: Icon(
                     Icons.play_arrow_outlined,
-                    size: 40,
+                    size: 40.r,
                     color: Colors.deepPurple,
                   ),
                 ),
               ],
             ),
-            const SizedBox(
-              height: 10,
-            ),
+         
             Image.asset(
               'assets/running.png',
-              width: 300,
-              height: 230,
+              width: 250.w,
+              height: 140.h,
             ),
           ],
         ),

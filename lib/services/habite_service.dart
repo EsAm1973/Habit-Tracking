@@ -33,6 +33,24 @@ class HabitService {
     }
   }
 
+  // Function to modify an existing habit
+  Future<void> modifyHabit(
+      String habitId, Map<String, dynamic> updatedData) async {
+    try {
+      User? user = _auth.currentUser;
+      if (user != null) {
+        await _firestore
+            .collection('users')
+            .doc(user.uid)
+            .collection('habits')
+            .doc(habitId)
+            .update(updatedData);
+      }
+    } catch (e) {
+      throw Exception("Failed to modify habit: $e");
+    }
+  }
+
   // Fetch user habits
   Stream<List<Habit>> getUserHabits() {
     User? user = _auth.currentUser;
