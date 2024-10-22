@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lottie/lottie.dart';
 
 import '../classes/colors.dart';
@@ -16,19 +17,19 @@ Widget buildPage({
       children: [
         Lottie.asset(
           image,
-          height: 350, // Ensure consistent height
+          height: 300.h, // Ensure consistent height
           fit: BoxFit.cover, // Use BoxFit.cover or BoxFit.contain
         ),
-        SizedBox(height: 20),
+        SizedBox(height: 20.h),
         Text(
           title,
-          style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold,color:MyColors.purple ),
+          style: TextStyle(fontSize: 28.sp, fontWeight: FontWeight.bold,color:MyColors.purple ),
         ),
-        SizedBox(height: 10),
+        SizedBox(height: 10.h),
         Text(
           description,
           textAlign: TextAlign.center,
-          style: TextStyle(fontSize: 20, color: Colors.black),
+          style: TextStyle(fontSize: 20.sp, color: Colors.black),
         ),
       ],
     ),

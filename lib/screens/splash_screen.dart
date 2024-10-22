@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lottie/lottie.dart';
 
 import 'Onboardig_screen.dart';
@@ -33,7 +34,7 @@ class _SplashScreenState extends State<SplashScreen> {
         children: [
           Center(
             child: Container(
-              height: 300,
+              height: 300.h,
               child: Lottie.asset('assets/Animation - 1728606717399.json'),
             ),
           ),
@@ -51,7 +52,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 child: Text(
                   "Habit Hive",
                   style: TextStyle(
-                    fontSize: 32,
+                    fontSize: 32.sp,
                     fontWeight: FontWeight.bold,
                     color: Colors.white,
                     decoration: TextDecoration.none, // Ensure no underline

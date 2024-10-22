@@ -50,6 +50,7 @@ dependencies:
   flutter_native_splash:
   flutter_onboarding_slider:
   lottie:
+  flutter_screenutil:
 
 
 dev_dependencies:
