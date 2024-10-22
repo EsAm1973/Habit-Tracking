@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:habit_tracking/screens/login_screen.dart';
 
 class LogoutDialog extends StatelessWidget {
   const LogoutDialog({super.key});
@@ -39,7 +40,7 @@ class LogoutDialog extends StatelessWidget {
                                       side: const BorderSide(
                                           color: Colors.purpleAccent))),
                               onPressed: () {
-                               Navigator.of(context).pop();
+                                Navigator.of(context).pop();
                               },
                               child: const Text(
                                 "Cancel",
@@ -47,6 +48,26 @@ class LogoutDialog extends StatelessWidget {
                                   fontFamily: "Montserrat",
                                   fontWeight: FontWeight.w400,
                                   color: Colors.purpleAccent,
+                                  fontSize: 20,
+                                ),
+                              )),
+                          ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.purpleAccent,
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(12),
+                                      side: const BorderSide(
+                                          color: Colors.purpleAccent))),
+                              onPressed: () {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) => LoginScreen()));
+                              },
+                              child: const Text(
+                                "LogOut",
+                                style: TextStyle(
+                                  fontFamily: "Montserrat",
+                                  fontWeight: FontWeight.w400,
+                                  color: Colors.white,
                                   fontSize: 20,
                                 ),
                               )),
@@ -103,21 +124,21 @@ class LogoutDialog extends StatelessWidget {
             ),
           ),
         ),
-        Positioned(
-          top: MediaQuery.sizeOf(context).height * .365,
-          left: 50,
-          child: Container(
-              height: 60,
-              width: 60,
-              decoration: const BoxDecoration(
-                  color: Colors.purpleAccent, shape: BoxShape.circle),
-              child: Image.asset("assets/icons/logout.png")),
-        ),
-        Positioned(
-          top: MediaQuery.sizeOf(context).height * .475,
-          left: 35,
-          child: Image.asset("assets/images/dialog_decoration.png"),
-        ),
+        // Positioned(
+        //   top: MediaQuery.sizeOf(context).height * .365,
+        //   left: 50,
+        //   child: Container(
+        //       height: 60,
+        //       width: 60,
+        //       decoration: const BoxDecoration(
+        //           color: Colors.purpleAccent, shape: BoxShape.circle),
+        //       child: Image.asset("assets/icons/logout.png")),
+        // ),
+        // Positioned(
+        //   top: MediaQuery.sizeOf(context).height * .475,
+        //   left: 35,
+        //   child: Image.asset("assets/images/dialog_decoration.png"),
+        // ),
       ]),
     );
   }
