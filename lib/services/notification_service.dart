@@ -81,8 +81,8 @@ class NotificationService {
         notificationLayout: NotificationLayout.Default,
       ),
       schedule: NotificationCalendar(
-        hour: 19, // 1 ظهرًا (بتوقيت 24 ساعة)
-        minute: 26,
+        hour: 13, // 1 ظهرًا (بتوقيت 24 ساعة)
+        minute: 0,
         second: 0,
         millisecond: 0,
         repeats: true, // تكرار يومي
