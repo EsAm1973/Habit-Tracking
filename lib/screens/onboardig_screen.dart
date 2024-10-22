@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_onboarding_slider/flutter_onboarding_slider.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:habit_tracking/screens/home_page.dart';
+import 'package:habit_tracking/screens/welcomScreen.dart';
 import '../classes/colors.dart';
 import '../widgets/custom_container.dart';
 import '../widgets/onboarding_build_page.dart';
@@ -15,7 +15,11 @@ class OnboardingScreen extends StatelessWidget {
       body: OnBoardingSlider(
         headerBackgroundColor: Colors.white,
         finishButtonText: 'Get Started',
-        finishButtonStyle: FinishButtonStyle(backgroundColor: MyColors.purple,shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(32),)),
+        finishButtonStyle: FinishButtonStyle(
+            backgroundColor: MyColors.purple,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(32),
+            )),
         finishButtonTextStyle: TextStyle(
           fontSize: 18.sp,
           color: Colors.white,

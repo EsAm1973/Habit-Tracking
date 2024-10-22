@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:habit_tracking/screens/home_page.dart';
+import 'package:habit_tracking/widgets/buttom_nav_bar.dart';
 
 Future<void> signInWithGoogle(BuildContext context) async {
   try {
@@ -38,7 +38,7 @@ Future<void> signInWithGoogle(BuildContext context) async {
     if (userCredential.user != null) {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => const HomePage()),
+        MaterialPageRoute(builder: (context) => const ButtonNavBar()),
       );
     } else {
       _showMessage(context, "Failed to sign in. Please try again.");

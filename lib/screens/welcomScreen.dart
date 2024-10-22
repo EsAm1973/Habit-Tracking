@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:habit_tracking/screens/login_screen.dart';
 import 'package:habit_tracking/screens/sign_up_screen.dart';
 import 'package:habit_tracking/services/googl.dart';
@@ -20,31 +21,31 @@ class WelcomeScreen extends StatelessWidget {
           ),
           child: Center(
             child: Padding(
-              padding: const EdgeInsets.all(16.0),
+              padding: EdgeInsets.all(16.0.r),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Image.asset("assets/vector.png"),
-                  const SizedBox(height: 10),
-                  const Text(
+                  SizedBox(height: 10.h),
+                  Text(
                     'HABIT HIVE',
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: 30,
+                      fontSize: 20.sp,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  const SizedBox(height: 30),
-                  const Text(
+                  SizedBox(height: 30.h),
+                  Text(
                     "Welcome Back",
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: 30,
+                      fontSize: 18.sp,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  const SizedBox(height: 30),
+                  SizedBox(height: 30.h),
                   ElevatedButton(
                     onPressed: () {
                       Navigator.pushReplacement(
@@ -54,8 +55,8 @@ class WelcomeScreen extends StatelessWidget {
                       );
                     },
                     style: ElevatedButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 50, vertical: 15),
+                      padding: EdgeInsets.symmetric(
+                          horizontal: 50.h, vertical: 15.w),
                       backgroundColor: Colors.transparent,
                       elevation: 0,
                       shape: RoundedRectangleBorder(
@@ -63,15 +64,16 @@ class WelcomeScreen extends StatelessWidget {
                         side: const BorderSide(color: Colors.white, width: 2),
                       ),
                     ),
-                    child: const Text(
+                    child: Text(
                       "SIGN IN",
                       style: TextStyle(
+                        fontSize: 12.sp,
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
-                  const SizedBox(height: 20),
+                  SizedBox(height: 20.h),
                   ElevatedButton(
                     onPressed: () {
                       Navigator.pushReplacement(
@@ -82,27 +84,30 @@ class WelcomeScreen extends StatelessWidget {
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.white,
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 50, vertical: 15),
+                      padding: EdgeInsets.symmetric(
+                          horizontal: 50.h, vertical: 15.w),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(30),
                       ),
                     ),
-                    child: const Text(
+                    child: Text(
                       "SIGN UP",
                       style: TextStyle(
-                          color: Colors.black, fontWeight: FontWeight.bold),
+                          fontSize: 12.sp,
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold),
                     ),
                   ),
-                  const SizedBox(height: 50),
-                  const Text(
+                  SizedBox(height: 30.h),
+                  Text(
                     'Login With Social Media',
                     style: TextStyle(
+                      fontSize: 12.sp,
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  const SizedBox(height: 15),
+                  SizedBox(height: 15.h),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -110,21 +115,20 @@ class WelcomeScreen extends StatelessWidget {
                         onTap: () {
                           // signInWithFacebook();
                         },
-                        child: Image.asset('assets/facebook.png', width: 30),
+                        child: Image.asset('assets/facebook.png', width: 30.w),
                       ),
-                      const SizedBox(width: 20),
+                      SizedBox(width: 20.w),
                       GestureDetector(
                         onTap: () {
                           signInWithGoogle(context);
                         },
-                        child: Image.asset('assets/google.png', width: 30),
+                        child: Image.asset('assets/google.png', width: 30.w),
                       ),
-                      const SizedBox(width: 20),
+                      SizedBox(width: 20.w),
                       GestureDetector(
                         onTap: () {},
-                        child: Image.asset('assets/instagram.png', width: 30),
+                        child: Image.asset('assets/instagram.png', width: 30.w),
                       ),
-                      const SizedBox(width: 10),
                     ],
                   ),
                 ],

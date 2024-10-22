@@ -189,9 +189,9 @@ class _HomePageState extends State<HomePage> {
                               text: TextSpan(
                                 children: [
                                   TextSpan(
-                                    text: 'Welcome back, ',
+                                    text: 'Welcome, ',
                                     style: TextStyle(
-                                      fontSize: 16.sp,
+                                      fontSize: 15.sp,
                                       fontWeight: FontWeight.bold,
                                       color: Colors.white.withOpacity(0.8),
                                     ),
@@ -199,7 +199,7 @@ class _HomePageState extends State<HomePage> {
                                   TextSpan(
                                     text: '${user?.displayName ?? 'User'}!',
                                     style: TextStyle(
-                                      fontSize: 15.sp,
+                                      fontSize: 14.sp,
                                       fontWeight: FontWeight.bold,
                                       color: Colors.white,
                                     ),
