@@ -16,7 +16,7 @@ Widget buildPage({
       children: [
         Lottie.asset(
           image,
-          height: 300, // Ensure consistent height
+          height: 350, // Ensure consistent height
           fit: BoxFit.cover, // Use BoxFit.cover or BoxFit.contain
         ),
         SizedBox(height: 20),
