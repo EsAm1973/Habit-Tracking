@@ -1,4 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:habit_tracking/screens/login_screen.dart';
 
 class LogoutDialog extends StatelessWidget {
@@ -57,9 +59,14 @@ class LogoutDialog extends StatelessWidget {
                                       borderRadius: BorderRadius.circular(12),
                                       side: const BorderSide(
                                           color: Colors.purpleAccent))),
-                              onPressed: () {
-                                Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) => LoginScreen()));
+                              onPressed: () async {
+                                GoogleSignIn googleSignIn = GoogleSignIn();
+                                googleSignIn.disconnect();
+                                await FirebaseAuth.instance.signOut();
+                                Navigator.of(context).pushAndRemoveUntil(
+                                    MaterialPageRoute(
+                                        builder: (context) => LoginScreen()),
+                                    (route) => false);
                               },
                               child: const Text(
                                 "LogOut",
