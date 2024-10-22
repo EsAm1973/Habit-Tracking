@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../widgets/custom_photo_container.dart';
@@ -16,8 +17,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body:
-      CustomScrollView(
+      body: CustomScrollView(
         scrollDirection: Axis.vertical,
         slivers: [
           SliverAppBar(
@@ -29,44 +29,41 @@ class _ProfileScreenState extends State<ProfileScreen> {
             flexibleSpace: Stack(
               children: [
                 FlexibleSpaceBar(
-                  background:
-                Container(
-                   color: Colors.deepPurple,
-                 ),
+                  background: Container(
+                    color: Colors.deepPurple,
+                  ),
                 ),
                 const CustomPhotoContainer(),
               ],
             ),
             expandedHeight: 200,
           ),
-           const SliverToBoxAdapter(
-            child: Padding(
-              padding:
-              EdgeInsets.symmetric(vertical: 8.0, horizontal: 24),
-              child: Column(
+          SliverToBoxAdapter(
+              child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 24),
+                  child: Column(
                     children: [
                       Text(
-                            'Ahmed',
-                        style: TextStyle(
+                        '${FirebaseAuth.instance.currentUser!.displayName}',
+                        style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w500,
                           color: Colors.black,
                         ),
                       ),
                       Text(
-                            'ahmed@gmail.com',
-                        style: TextStyle(
+                        '${FirebaseAuth.instance.currentUser!.email}',
+                        style: const TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.w400,
                           color: Colors.grey,
                         ),
                       ),
-                      MyAccountContainer(),
-                      MoreInformationContainer(),
-                      LogOutContainer(),
+                      const MyAccountContainer(),
+                      const MoreInformationContainer(),
+                      const LogOutContainer(),
                     ],
-                  ))
-            ),
+                  ))),
         ],
       ),
     );

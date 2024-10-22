@@ -18,8 +18,7 @@ class LogoutDialog extends StatelessWidget {
               child: Container(
                 decoration: const BoxDecoration(color: Colors.white),
                 child: Padding(
-                  padding: const EdgeInsets.only(
-                      top: 16, bottom: 16, left: 76, right: 12),
+                  padding: const EdgeInsets.all(20),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.stretch,
