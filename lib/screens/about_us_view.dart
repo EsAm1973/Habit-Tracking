@@ -72,12 +72,14 @@ class _AboutUsViewState extends State<AboutUsView> {
                       ClipRRect(
                           borderRadius: BorderRadius.circular(15),
                           child: Image.asset("assets/about_us.png")),
-                      SizedBox(height: 18,),
-                      Text(
-                          "We are a passionate team of developers, designers, and wellness enthusiasts dedicated to helping people build better habits and lead more fulfilling lives. Our journey began with a shared belief that small, consistent actions can lead to big, transformative changes. This app was created with the goal of empowering individuals to track, manage, and improve their daily habits through an intuitive and user-friendly experience. We strive to offer a tool that not only supports personal growth but also fosters a sense of achievement and motivation. Together, we are committed to making a positive impact on your journey towards a healthier, more productive life." , style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w400
-                      ),)
+                      const SizedBox(
+                        height: 18,
+                      ),
+                      const Text(
+                        "We are a passionate team of developers, designers, and wellness enthusiasts dedicated to helping people build better habits and lead more fulfilling lives. Our journey began with a shared belief that small, consistent actions can lead to big, transformative changes. This app was created with the goal of empowering individuals to track, manage, and improve their daily habits through an intuitive and user-friendly experience. We strive to offer a tool that not only supports personal growth but also fosters a sense of achievement and motivation. Together, we are committed to making a positive impact on your journey towards a healthier, more productive life.",
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.w400),
+                      )
                     ],
                   ))),
         ],

@@ -71,21 +71,20 @@ class _DeleteAccountDialogState extends State<DeleteAccountDialog> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: MediaQuery.sizeOf(context).height,
       child: Stack(
         children: [
           Center(
             child: ClipRRect(
               borderRadius: BorderRadius.circular(24),
               child: SizedBox(
-                height: MediaQuery.sizeOf(context).height * 0.25,
+                height: MediaQuery.sizeOf(context).height * 0.40,
                 width: MediaQuery.sizeOf(context).width * 0.8,
                 child: Container(
                   decoration: const BoxDecoration(color: Colors.white),
                   child: Padding(
                     padding: const EdgeInsets.all(15),
                     child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         const Text(
@@ -93,7 +92,6 @@ class _DeleteAccountDialogState extends State<DeleteAccountDialog> {
                           style: TextStyle(
                               fontWeight: FontWeight.w600, fontSize: 16),
                         ),
-                        const SizedBox(height: 16),
                         Material(
                           child: TextFormField(
                             controller: _passwordController,
@@ -104,7 +102,6 @@ class _DeleteAccountDialogState extends State<DeleteAccountDialog> {
                             ),
                           ),
                         ),
-                        const SizedBox(height: 16),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [

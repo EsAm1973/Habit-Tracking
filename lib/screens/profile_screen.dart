@@ -40,13 +40,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
           SliverToBoxAdapter(
               child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 24),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 8.0, horizontal: 24),
                   child: Column(
                     children: [
                       Text(
                         '${FirebaseAuth.instance.currentUser!.displayName}',
                         style: const TextStyle(
-                          fontSize: 16,
+                          fontSize: 24,
                           fontWeight: FontWeight.w500,
                           color: Colors.black,
                         ),
@@ -54,7 +55,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       Text(
                         '${FirebaseAuth.instance.currentUser!.email}',
                         style: const TextStyle(
-                          fontSize: 12,
+                          fontSize: 16,
                           fontWeight: FontWeight.w400,
                           color: Colors.grey,
                         ),

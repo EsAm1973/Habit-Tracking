@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:habit_tracking/screens/login_screen.dart';
 
@@ -9,26 +10,25 @@ class LogoutDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: MediaQuery.sizeOf(context).height,
       child: Stack(children: [
         Center(
           child: ClipRRect(
             borderRadius: BorderRadius.circular(24),
             child: SizedBox(
-              height: MediaQuery.sizeOf(context).height * 0.15,
+              height: MediaQuery.sizeOf(context).height * 0.20,
               width: MediaQuery.sizeOf(context).width * 0.825,
               child: Container(
                 decoration: const BoxDecoration(color: Colors.white),
                 child: Padding(
                   padding: const EdgeInsets.all(20),
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      const Text(
+                      Text(
                         "Are you want to logout?",
                         style: TextStyle(
-                            fontWeight: FontWeight.w600, fontSize: 16),
+                            fontWeight: FontWeight.w600, fontSize: 16.sp),
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -43,13 +43,13 @@ class LogoutDialog extends StatelessWidget {
                               onPressed: () {
                                 Navigator.of(context).pop();
                               },
-                              child: const Text(
+                              child: Text(
                                 "Cancel",
                                 style: TextStyle(
                                   fontFamily: "Montserrat",
                                   fontWeight: FontWeight.w400,
                                   color: Colors.purpleAccent,
-                                  fontSize: 20,
+                                  fontSize: 20.sp,
                                 ),
                               )),
                           ElevatedButton(
@@ -68,13 +68,13 @@ class LogoutDialog extends StatelessWidget {
                                         builder: (context) => LoginScreen()),
                                     (route) => false);
                               },
-                              child: const Text(
+                              child: Text(
                                 "LogOut",
                                 style: TextStyle(
                                   fontFamily: "Montserrat",
                                   fontWeight: FontWeight.w400,
                                   color: Colors.white,
-                                  fontSize: 20,
+                                  fontSize: 20.sp,
                                 ),
                               )),
                           // BlocConsumer<UserCubit, UserState>(
