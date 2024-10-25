@@ -16,18 +16,18 @@ For help getting started with Flutter development, view the
 samples, guidance on mobile development, and a full API reference.
 
 <p float="left">
-  <img src="screenshots/splash.png" width="150" />
-  <img src="screenshots/onboarding1.png" width="150" />
-  <img src="screenshots/onboarding2.png" width="150" />
-  <img src="screenshots/onboarding3.png" width="150" />
-  <img src="screenshots/welcome.png" width="150" />
-  <img src="screenshots/signin.png" width="150" />
-  <img src="screenshots/signup.png" width="150" />
-  <img src="screenshots/home page.png" width="150" />
-  <img src="screenshots/add habit.png" width="150" />
-  <img src="screenshots/edit habit.png" width="150" />
-  <img src="screenshots/track habit.png" width="150" />
-  <img src="screenshots/tracking.png" width="150" />
-  <img src="screenshots/profile 1.png" width="150" />
-  <img src="screenshots/profile 2.png" width="150" />
+  <img src="screenshots/splash.png" width="200" />
+  <img src="screenshots/onboarding1.png" width="200" />
+  <img src="screenshots/onboarding2.png" width="200" />
+  <img src="screenshots/onboarding3.png" width="200" />
+  <img src="screenshots/welcome.png" width="200" />
+  <img src="screenshots/signin.png" width="200" />
+  <img src="screenshots/signup.png" width="200" />
+  <img src="screenshots/home page.png" width="200" />
+  <img src="screenshots/add habit.png" width="200" />
+  <img src="screenshots/edit habit.png" width="200" />
+  <img src="screenshots/track habit.png" width="200" />
+  <img src="screenshots/tracking.png" width="200" />
+  <img src="screenshots/profile 1.png" width="200" />
+  <img src="screenshots/profile 2.png" width="200" />
 </p>
