@@ -1,4 +1,4 @@
-# habit_tracking
+# Habit Tracking
 
 A new Flutter project.
 
@@ -15,17 +15,17 @@ For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
 
-![Image Alt](https://github.com/EsAm1973/Habit-Tracking/blob/3206a6cac98bf92b3e67ac5e2c93b0565c9880e1/splash.png)
-![Image Alt](https://github.com/EsAm1973/Habit-Tracking/blob/3206a6cac98bf92b3e67ac5e2c93b0565c9880e1/onboarding1.png)
-![Image Alt](https://github.com/EsAm1973/Habit-Tracking/blob/3206a6cac98bf92b3e67ac5e2c93b0565c9880e1/onboarding2.png)
-![Image Alt](https://github.com/EsAm1973/Habit-Tracking/blob/3206a6cac98bf92b3e67ac5e2c93b0565c9880e1/onboarding3.png)
-![Image Alt](https://github.com/EsAm1973/Habit-Tracking/blob/3206a6cac98bf92b3e67ac5e2c93b0565c9880e1/welcome.png)
-![Image Alt](https://github.com/EsAm1973/Habit-Tracking/blob/3206a6cac98bf92b3e67ac5e2c93b0565c9880e1/signin.png)
-![Image Alt](https://github.com/EsAm1973/Habit-Tracking/blob/3206a6cac98bf92b3e67ac5e2c93b0565c9880e1/signup.png)
-![Image Alt](https://github.com/EsAm1973/Habit-Tracking/blob/3206a6cac98bf92b3e67ac5e2c93b0565c9880e1/home%20page.png)
-![Image Alt](https://github.com/EsAm1973/Habit-Tracking/blob/3206a6cac98bf92b3e67ac5e2c93b0565c9880e1/add%20habit.png)
-![Image Alt](https://github.com/EsAm1973/Habit-Tracking/blob/3206a6cac98bf92b3e67ac5e2c93b0565c9880e1/edit%20habit.png)
-![Image Alt](https://github.com/EsAm1973/Habit-Tracking/blob/3206a6cac98bf92b3e67ac5e2c93b0565c9880e1/track%20habit.png)
-![Image Alt](https://github.com/EsAm1973/Habit-Tracking/blob/3206a6cac98bf92b3e67ac5e2c93b0565c9880e1/tracking.png)
-![Image Alt](https://github.com/EsAm1973/Habit-Tracking/blob/3206a6cac98bf92b3e67ac5e2c93b0565c9880e1/profile%201.png)
-![Image Alt](https://github.com/EsAm1973/Habit-Tracking/blob/3206a6cac98bf92b3e67ac5e2c93b0565c9880e1/profile%202.png)
+<img src="https://github.com/EsAm1973/Habit-Tracking/blob/3206a6cac98bf92b3e67ac5e2c93b0565c9880e1/splash.png" width="300">
+<img src="https://github.com/EsAm1973/Habit-Tracking/blob/3206a6cac98bf92b3e67ac5e2c93b0565c9880e1/onboarding1.png" width="300">
+<img src="https://github.com/EsAm1973/Habit-Tracking/blob/3206a6cac98bf92b3e67ac5e2c93b0565c9880e1/onboarding2.png" width="300">
+<img src="https://github.com/EsAm1973/Habit-Tracking/blob/3206a6cac98bf92b3e67ac5e2c93b0565c9880e1/onboarding3.png" width="300">
+<img src="https://github.com/EsAm1973/Habit-Tracking/blob/3206a6cac98bf92b3e67ac5e2c93b0565c9880e1/welcome.png" width="300">
+<img src="https://github.com/EsAm1973/Habit-Tracking/blob/3206a6cac98bf92b3e67ac5e2c93b0565c9880e1/signin.png" width="300">
+<img src="https://github.com/EsAm1973/Habit-Tracking/blob/3206a6cac98bf92b3e67ac5e2c93b0565c9880e1/signup.png" width="300">
+<img src="https://github.com/EsAm1973/Habit-Tracking/blob/3206a6cac98bf92b3e67ac5e2c93b0565c9880e1/home%20page.png" width="300">
+<img src="https://github.com/EsAm1973/Habit-Tracking/blob/3206a6cac98bf92b3e67ac5e2c93b0565c9880e1/add%20habit.png" width="300">
+<img src="https://github.com/EsAm1973/Habit-Tracking/blob/3206a6cac98bf92b3e67ac5e2c93b0565c9880e1/edit%20habit.png" width="300">
+<img src="https://github.com/EsAm1973/Habit-Tracking/blob/3206a6cac98bf92b3e67ac5e2c93b0565c9880e1/track%20habit.png" width="300">
+<img src="https://github.com/EsAm1973/Habit-Tracking/blob/3206a6cac98bf92b3e67ac5e2c93b0565c9880e1/tracking.png" width="300">
+<img src="https://github.com/EsAm1973/Habit-Tracking/blob/3206a6cac98bf92b3e67ac5e2c93b0565c9880e1/profile%201.png" width="300">
+<img src="https://github.com/EsAm1973/Habit-Tracking/blob/3206a6cac98bf92b3e67ac5e2c93b0565c9880e1/profile%202.png" width="300">
