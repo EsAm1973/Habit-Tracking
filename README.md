@@ -24,19 +24,50 @@ The Habit Tracking App is designed to help users effectively manage their daily 
 
 4. Access the Profile page to view user data, change your password, log out, or permanently delete your account.
 
+## Photos of Screens
+
+### Splash Screen
 <p float="left">
   <img src="screenshots/splash.png" width="200" />
+</p>
+
+### Onboarding Screens
+<p float="left">
   <img src="screenshots/onboarding1.png" width="200" />
   <img src="screenshots/onboarding2.png" width="200" />
   <img src="screenshots/onboarding3.png" width="200" />
+</p>
+
+### Welcome Screen
+<p float="left">
   <img src="screenshots/welcome.png" width="200" />
+</p>
+
+### Sign In and Sign Up Screens
+<p float="left">
   <img src="screenshots/signin.png" width="200" />
   <img src="screenshots/signup.png" width="200" />
+</p>
+
+### Home Page
+<p float="left">
   <img src="screenshots/home page.png" width="200" />
+</p>
+
+### Adding and Editing Habits
+<p float="left">
   <img src="screenshots/add habit.png" width="200" />
   <img src="screenshots/edit habit.png" width="200" />
+</p>
+
+### Tracking Habits
+<p float="left">
   <img src="screenshots/track habit.png" width="200" />
   <img src="screenshots/tracking.png" width="200" />
+</p>
+
+### Profile Screens
+<p float="left">
   <img src="screenshots/profile 1.png" width="200" />
   <img src="screenshots/profile 2.png" width="200" />
 </p>
