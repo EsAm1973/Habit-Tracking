@@ -16,18 +16,18 @@ For help getting started with Flutter development, view the
 samples, guidance on mobile development, and a full API reference.
 
 <p float="left">
-  <img src="https://github.com/EsAm1973/Habit-Tracking/blob/3206a6cac98bf92b3e67ac5e2c93b0565c9880e1/splash.png" width="200" />
-  <img src="https://github.com/EsAm1973/Habit-Tracking/blob/3206a6cac98bf92b3e67ac5e2c93b0565c9880e1/onboarding1.png" width="200" />
-  <img src="https://github.com/EsAm1973/Habit-Tracking/blob/3206a6cac98bf92b3e67ac5e2c93b0565c9880e1/onboarding2.png" width="200" />
-  <img src="https://github.com/EsAm1973/Habit-Tracking/blob/3206a6cac98bf92b3e67ac5e2c93b0565c9880e1/onboarding3.png" width="200" />
-  <img src="https://github.com/EsAm1973/Habit-Tracking/blob/3206a6cac98bf92b3e67ac5e2c93b0565c9880e1/welcome.png" width="200" />
-  <img src="https://github.com/EsAm1973/Habit-Tracking/blob/3206a6cac98bf92b3e67ac5e2c93b0565c9880e1/signin.png" width="200" />
-  <img src="https://github.com/EsAm1973/Habit-Tracking/blob/3206a6cac98bf92b3e67ac5e2c93b0565c9880e1/signup.png" width="200" />
-  <img src="https://github.com/EsAm1973/Habit-Tracking/blob/3206a6cac98bf92b3e67ac5e2c93b0565c9880e1/home%20page.png" width="200" />
-  <img src="https://github.com/EsAm1973/Habit-Tracking/blob/3206a6cac98bf92b3e67ac5e2c93b0565c9880e1/add%20habit.png" width="200" />
-  <img src="https://github.com/EsAm1973/Habit-Tracking/blob/3206a6cac98bf92b3e67ac5e2c93b0565c9880e1/edit%20habit.png" width="200" />
-  <img src="https://github.com/EsAm1973/Habit-Tracking/blob/3206a6cac98bf92b3e67ac5e2c93b0565c9880e1/track%20habit.png" width="200" />
-  <img src="https://github.com/EsAm1973/Habit-Tracking/blob/3206a6cac98bf92b3e67ac5e2c93b0565c9880e1/tracking.png" width="200" />
-  <img src="https://github.com/EsAm1973/Habit-Tracking/blob/3206a6cac98bf92b3e67ac5e2c93b0565c9880e1/profile%201.png" width="200" />
-  <img src="https://github.com/EsAm1973/Habit-Tracking/blob/3206a6cac98bf92b3e67ac5e2c93b0565c9880e1/profile%202.png" width="200" />
+  <img src="screenshots/splash.png" width="150" />
+  <img src="screenshots/onboarding1.png" width="150" />
+  <img src="screenshots/onboarding2.png" width="150" />
+  <img src="screenshots/onboarding3.png" width="150" />
+  <img src="screenshots/welcome.png" width="150" />
+  <img src="screenshots/signin.png" width="150" />
+  <img src="screenshots/signup.png" width="150" />
+  <img src="screenshots/home page.png" width="150" />
+  <img src="screenshots/add habit.png" width="150" />
+  <img src="screenshots/edit habit.png" width="150" />
+  <img src="screenshots/track habit.png" width="150" />
+  <img src="screenshots/tracking.png" width="150" />
+  <img src="screenshots/profile 1.png" width="150" />
+  <img src="screenshots/profile 2.png" width="150" />
 </p>
